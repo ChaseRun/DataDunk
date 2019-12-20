@@ -225,7 +225,7 @@ def tweetDailyLeaders(api):
 
 	# tweet 3 points
 	rank = 1	
-	tweet = "3 PointLeaders " + printDay + "\n\n"
+	tweet = "3 Point Leaders " + printDay + "\n\n"
 	for player in topFG3M:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["FG3M"]) + "\n"
 		rank = rank + 1
