@@ -16,7 +16,7 @@ setup(
     project_urls={
         "Github": "https://github.com/ChaseAustin/DataDunk"
     },
-    py_
+    py_modules=['__main__'],
     packages=['mongo'],
     include_package_data=True,
     install_requires=[

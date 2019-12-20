@@ -5,5 +5,8 @@ import requests
 import time
 import datetime
 
-import index.update
-from mongo.mongo.config import *
+import mongo.update
+import config
+import __main__
+
+

@@ -8,7 +8,7 @@ from operator import itemgetter
 @click.command()
 def main():
 	# tweet different parameters 
-	# program runs daily at 1:00 am after all games finish
+	# program runs daily at 1:00 am after all games finishcd .
 
 	# get twitter connection
 	api = connect()
