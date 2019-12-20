@@ -1,7 +1,22 @@
+import click
 import tweepy
 import datetime
 from pymongo import MongoClient
 from operator import itemgetter
+
+
+@click.command()
+def main():
+	# tweet different parameters 
+	# program runs daily at 1:00 am after all games finish
+
+	# get twitter connection
+	api = connect()
+
+	tweetDailyLeaders(api)
+	tweetWeeklyLeaders(api)
+	tweetSeasonLeaders(api)
+	tweetStandOutPLayers(api)
 
 def numToMonth(month):
 	# convert number to month
@@ -360,20 +375,6 @@ def connect():
 	    print("Error during authentication")
 
 	return tweepy.API(auth)
-
-
-def main():
-	# tweet different parameters 
-	# program runs daily at 1:00 am after all games finish
-
-	# get twitter connection
-	api = connect()
-
-	tweetDailyLeaders(api)
-	tweetWeeklyLeaders(api)
-	tweetSeasonLeaders(api)
-	tweetStandOutPLayers(api)
-
 
 if __name__ == '__main__':
     main()

@@ -4,10 +4,10 @@ DataDunk:twitter python modules.
 Chase Austin (chase7867@gmail.com)
 """
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
-    name="DataDunk",
+    name="twitter",
     version="0.1",
     author="Chase Austin",
     author_email="chase7867@gmail.com",
@@ -17,17 +17,13 @@ setup(
     project_urls={
         "Github": "https://github.com/ChaseAustin/DataDunk"
     },
-
-    packages=find_namespace_packages(),
+    py_modules=['__main__'],
+    packages=['twitter'],
     include_package_data=True,
     install_requires=[
         "click==7.0",
-        "pycodestyle==2.5.0",
-        "pydocstyle==4.0.1",
-        "pylint==2.4.3",
-        "pytest==5.2.1",
         "pymongo==3.10.0",
-        "datatime==4.3",
+        "datetime==4.3",
         "tweepy==3.8.0"
     ],
 )
