@@ -13,12 +13,12 @@ from update.helperFunctions import *
 def updateBoxScoreTraditional():
 
 	boxScoreTable = getTable("boxScoreTraditional")
-	newGames = gameIdsToday()
+	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
 
 	period = [0, 1, 2, 3, 4, 5]
 
-	print("Getting Player Info...")
+	print("Getting BoxScore Info...")
 
 	for game in newGames:
 		if game["_id"] not in pastGames:
@@ -38,7 +38,7 @@ def updateBoxScoreTraditional():
 			for p in period:
 				
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, headers=headers, timeout=50)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, timeout=50)
 
 					stats = []
 
@@ -51,7 +51,7 @@ def updateBoxScoreTraditional():
 					awayPlayers = []
 					heads = stats[0]["headers"]
 					for person in stats[0]["data"]:
-						if person[1] == game["home_team"]:
+						if person[1] == game["home_team_id"]:
 							homePlayers.append(dict(zip(heads, person)))
 						
 						else:
@@ -62,7 +62,7 @@ def updateBoxScoreTraditional():
 					awayRoster = {}
 					heads = stats[1]["headers"]
 					for spot in stats[1]["data"]:
-						if int(spot[1]) == game["home_team"]:
+						if int(spot[1]) == game["home_team_id"]:
 							if spot[5] == "Starters":
 								homeRoster["starters"] = dict(zip(heads, spot))
 
@@ -80,7 +80,7 @@ def updateBoxScoreTraditional():
 					awayStats = {}
 					heads = heds = stats[2]["headers"]
 					for val in stats[2]["data"]:
-						if val[1] == game["home_team"]:
+						if val[1] == game["home_team_id"]:
 							homeStats = dict(zip(heads, val))
 						else:
 							awayStats = dict(zip(heads, val))

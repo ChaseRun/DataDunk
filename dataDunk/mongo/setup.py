@@ -3,7 +3,7 @@ DataDunk:mongo python modules.
 
 Chase Austin (chase7867@gmail.com)
 """
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="mongo",
@@ -16,7 +16,6 @@ setup(
     project_urls={
         "Github": "https://github.com/ChaseAustin/DataDunk"
     },
-    py_modules=['__main__'],
     packages=['mongo'],
     include_package_data=True,
     install_requires=[

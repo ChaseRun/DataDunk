@@ -1,7 +1,6 @@
 import click
 import mongo
 from update.boxScoreT import *
-from update.helperFunctions import *
 
 @click.command()
 @click.argument("collection", nargs=1)

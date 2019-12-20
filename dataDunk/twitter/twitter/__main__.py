@@ -1,6 +1,6 @@
 import click
 import tweepy
-import datetime
+from datetime import datetime, timedelta
 from pymongo import MongoClient
 from operator import itemgetter
 
@@ -14,9 +14,9 @@ def main():
 	api = connect()
 
 	tweetDailyLeaders(api)
-	tweetWeeklyLeaders(api)
-	tweetSeasonLeaders(api)
-	tweetStandOutPLayers(api)
+	#tweetWeeklyLeaders(api)
+	#tweetSeasonLeaders(api)
+	#tweetStandOutPLayers(api)
 
 def numToMonth(month):
 	# convert number to month
@@ -102,12 +102,14 @@ def tweetDailyLeaders(api):
 	numLeaders = 5
 
 	# get day
-	dt = datetime.datetime.today()
-	realDay = dt.day
-	month = dt.month
-	year = dt.year
+	day = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')
+	printDay = datetime.strftime(datetime.now() - timedelta(1), '%m %d, %Y')
 
-	day = str(year) + "-" + str(month) + "-" + str(realDay)
+	month = printDay[3:]
+	printDay = printDay[3:]
+	printDay = numToMonth(month) + " " + printDay
+
+
 
 	# get games
 	data = getBoxScoreTable()
@@ -124,17 +126,31 @@ def tweetDailyLeaders(api):
 		for player in game["period"][0]["awayTeamPlayerStats"]:
 			players.append(player)
 
+	topPts = players
+	topAst = players
+	topReb = players
+	topBlk = players
+	topStl = players
 
-	topPts = sorted(players, key=itemgetter("PTS"))
-	topAst = sorted(players, key=itemgetter("AST"))
-	topReb = sorted(players, key=itemgetter("REB"))
-	topBlk = sorted(players, key=itemgetter("BLK"))
-	topStl = sorted(players, key=itemgetter("STL"))
+	# remove players with no stats
+	topPts[:] = [p for p in topPts if p.get('PTS') != None]
+	topAst[:] = [p for p in topAst if p.get('PTS') != None]
+	topReb[:] = [p for p in topReb if p.get('PTS') != None]
+	topBlk[:] = [p for p in topBlk if p.get('PTS') != None]
+	topStl[:] = [p for p in topStl if p.get('PTS') != None]
+
+	# sort stats
+	topPts = sorted(topPts, key=itemgetter("PTS"))
+	topAst = sorted(topAst, key=itemgetter("AST"))
+	topReb = sorted(topReb, key=itemgetter("REB"))
+	topBlk = sorted(topBlk, key=itemgetter("BLK"))
+	topStl = sorted(topStl, key=itemgetter("STL"))
 
 	# get top stats
 	# reverse List and get top num leaders
 	# get lastPlayer with min stat
-	numLeaders = numLeaders
+	numLeaders = numLeaders - 1
+	
 	topPts = topPts[::-1]
 	lastPlayer = numLeaders
 	while topPts[lastPlayer]["PTS"] == topPts[numLeaders]["PTS"]:
@@ -142,25 +158,25 @@ def tweetDailyLeaders(api):
 	topPts = topPts[0: lastPlayer]
 
 	topAst  = topAst [::-1]
-	lastPlayer = numLeaders
+	lastPlayer = numLeaders 
 	while topAst[lastPlayer]["AST"] == topAst[numLeaders]["AST"]:
 		lastPlayer = lastPlayer + 1
 	topAst = topAst[0: lastPlayer]
 
 	topReb = topReb[::-1]
-	lastPlayer = numLeaders
+	lastPlayer = numLeaders 
 	while topReb[lastPlayer]["REB"] == topReb[numLeaders]["REB"]:
 		lastPlayer = lastPlayer + 1
 	topReb = topReb[0: lastPlayer]
 
 	topBlk = topBlk[::-1]
-	lastPlayer = numLeaders
+	lastPlayer = numLeaders 
 	while topBlk[lastPlayer]["BLK"] == topBlk[numLeaders]["BLK"]:
 		lastPlayer = lastPlayer + 1
 	topBlk = topBlk[0: lastPlayer]
 
 	topStl = topStl[::-1]
-	lastPlayer = numLeaders
+	lastPlayer = numLeaders 
 	while topStl[lastPlayer]["STL"] == topStl[numLeaders]["STL"]:
 		lastPlayer = lastPlayer + 1
 	topStl = topStl[0: lastPlayer]
@@ -168,43 +184,46 @@ def tweetDailyLeaders(api):
 
 	# tweet steals
 	rank = 1	
-	tweet = "Steal Leaders " + numToMonth(month) + " " + str(realDay) + ", " + str(year) + "\n\n"
+	tweet = "Steal Leaders " + printDay + "\n\n"
 	for player in topStl:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["STL"]) + "\n"
 		rank = rank + 1
-	#api.update_status(tweet)
+	api.update_status(tweet)
 
 	# tweet blocks
 	rank = 1	
-	tweet = "Block Leaders " + numToMonth(month) + " " + str(realDay) + ", " + str(year) + "\n\n"
+	tweet = "Block Leaders " + printDay + "\n\n"
 	for player in topBlk:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["BLK"]) + "\n"
 		rank = rank + 1
-	#api.update_status(tweet)	
+	api.update_status(tweet)	
 	
 	# tweet rebounds
 	rank = 1	
-	tweet = "Rebound Leaders " + numToMonth(month) + " " + str(realDay) + ", " + str(year) + "\n\n"
+	tweet = "Rebound Leaders " + printDay + "\n\n"
 	for player in topReb:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["REB"])+ "\n"
 		rank = rank + 1
-	#api.update_status(tweet)
+	api.update_status(tweet)
 
 	# tweet assists
 	rank = 1	
-	tweet = "Assist Leaders " + numToMonth(month) + " " + str(realDay) + ", " + str(year) + "\n\n"
+	tweet = "Assist Leaders " + printDay + "\n\n"
 	for player in topAst:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["AST"]) + "\n"
 		rank = rank + 1
-	#api.update_status(tweet)
+	api.update_status(tweet)
 
 	# tweet points
 	rank = 1	
-	tweet = "Point Leaders " + numToMonth(month) + " " + str(realDay) + ", " + str(year) + "\n\n"
+	tweet = "Point Leaders " + printDay + "\n\n"
 	for player in topPts:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["PTS"]) + "\n"
 		rank = rank + 1
 	api.update_status(tweet)
+
+
+	print("Tweeted Daily Leaders")
 
 	return
 
@@ -279,7 +298,7 @@ def tweetWeeklyLeaders(api):
 	exit()
 
 	lastPlayer = numLeaders
-	while topPts[lastPlayer]["PTS"] == topPts[numLeaders]["PTS"]:
+	while topPts[lastPlayer]["PTS"] == topPts[numLeaders ]["PTS"]:
 		lastPlayer = lastPlayer + 1
 	topPts = topPts[0: lastPlayer]
 
@@ -367,13 +386,7 @@ def connect():
 
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-
-	try:
-	    api.verify_credentials()
-	    print("Authentication OK")
-	except:
-	    print("Error during authentication")
-
+	
 	return tweepy.API(auth)
 
 if __name__ == '__main__':

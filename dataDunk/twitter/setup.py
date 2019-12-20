@@ -17,7 +17,6 @@ setup(
     project_urls={
         "Github": "https://github.com/ChaseAustin/DataDunk"
     },
-    py_modules=['__main__'],
     packages=['twitter'],
     include_package_data=True,
     install_requires=[

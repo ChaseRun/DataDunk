@@ -1,17 +1,19 @@
-def gameIdsToday():
-	# returns date, home_id, and away_id for today's game
+from nba_api.stats.endpoints import boxscoretraditionalv2
+from pymongo import MongoClient
+from datetime import datetime, timedelta
 
-	cluster = MongoClient("mongodb+srv://" + User + "@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
+
+def gameIds():
+	# returns date, home_id, and away_id for today's game
+	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
 	seasonGames = cluster['nba_data']["19-20_Season"]
-	dt = datetime.datetime.today()
-	day = str(dt.month) + "-" + str(dt.day) + "-" + str(dt.year)
-	
+	day = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')
 	return seasonGames.find({"game_date": day})
 
 
 def getTable(table):
 	# returns a mongodb table
-	cluster = MongoClient("mongodb+srv://" + User + "@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
+	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
 	return cluster['nba_data'][table]
 
 
