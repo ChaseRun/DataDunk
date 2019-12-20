@@ -131,13 +131,15 @@ def tweetDailyLeaders(api):
 	topReb = players
 	topBlk = players
 	topStl = players
+	topFG3M = players
 
 	# remove players with no stats
 	topPts[:] = [p for p in topPts if p.get('PTS') != None]
-	topAst[:] = [p for p in topAst if p.get('PTS') != None]
-	topReb[:] = [p for p in topReb if p.get('PTS') != None]
-	topBlk[:] = [p for p in topBlk if p.get('PTS') != None]
-	topStl[:] = [p for p in topStl if p.get('PTS') != None]
+	topAst[:] = [p for p in topAst if p.get('AST') != None]
+	topReb[:] = [p for p in topReb if p.get('REB') != None]
+	topBlk[:] = [p for p in topBlk if p.get('BLK') != None]
+	topStl[:] = [p for p in topStl if p.get('STL') != None]
+	topFG3M[:] = [p for p in topFG3M if p.get('FG3M') != None]
 
 	# sort stats
 	topPts = sorted(topPts, key=itemgetter("PTS"))
@@ -145,6 +147,7 @@ def tweetDailyLeaders(api):
 	topReb = sorted(topReb, key=itemgetter("REB"))
 	topBlk = sorted(topBlk, key=itemgetter("BLK"))
 	topStl = sorted(topStl, key=itemgetter("STL"))
+	topFG3M = sorted(topFG3M, key=itemgetter("FG3M"))
 
 	# get top stats
 	# reverse List and get top num leaders
@@ -180,6 +183,12 @@ def tweetDailyLeaders(api):
 	while topStl[lastPlayer]["STL"] == topStl[numLeaders]["STL"]:
 		lastPlayer = lastPlayer + 1
 	topStl = topStl[0: lastPlayer]
+
+	topFG3M = topFG3M[::-1]
+	lastPlayer = numLeaders 
+	while topStl[lastPlayer]["FG3M"] == topStl[numLeaders]["FG3M"]:
+		lastPlayer = lastPlayer + 1
+	topFG3M = topFG3M[0: lastPlayer]
 	
 
 	# tweet steals
@@ -211,6 +220,14 @@ def tweetDailyLeaders(api):
 	tweet = "Assist Leaders " + printDay + "\n\n"
 	for player in topAst:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["AST"]) + "\n"
+		rank = rank + 1
+	api.update_status(tweet)
+
+	# tweet 3 points
+	rank = 1	
+	tweet = "3 PointLeaders " + printDay + "\n\n"
+	for player in topFG3M:
+		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["FG3M"]) + "\n"
 		rank = rank + 1
 	api.update_status(tweet)
 
