@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Handles Updating mongoDB and Tweeting
+
+# update Mongo at 1:00am
+cd mongo
+python3 mongo
+cd ..
+
+# tweet at 8:00am
+cd twitter
+python3 twitter
+cd ..
+
+
