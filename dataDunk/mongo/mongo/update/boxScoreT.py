@@ -12,7 +12,9 @@ from update.helperFunctions import *
 
 def updateBoxScoreTraditional():
 
-
+	# check ifits 1:00am, (update time)
+	if not checkUpdate():
+		return
 
 	headers = {
 	    'Host': 'stats.nba.com',

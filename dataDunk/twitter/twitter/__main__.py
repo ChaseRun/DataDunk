@@ -89,9 +89,16 @@ def getWeekBoxScores(month, day, year):
 		index = index + 1
 
 	return scores
+
+def checkUpdate():
+	# return true if its 8:00am
+	now = datetime.now()
+	hour = now.strftime("%H")
+	if (int(hour) == 8):
+		return True
 	
-
-
+	return False
+	
 
 def getBoxScoreTable():
 	# returns a mongodb table
@@ -225,7 +232,7 @@ def tweetDailyLeaders(api):
 
 	# tweet 3 points
 	rank = 1	
-	tweet = "3 Point Leaders " + printDay + "\n\n"
+	tweet = "3 Point sLeaders " + printDay + "\n\n"
 	for player in topFG3M:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["FG3M"]) + "\n"
 		rank = rank + 1

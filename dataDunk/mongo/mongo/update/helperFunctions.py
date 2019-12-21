@@ -26,3 +26,12 @@ def tableIds(table):
 		ids.append(game["_id"])
 	
 	return ids
+
+def checkUpdate():
+	# return true if its 1:00am
+	now = datetime.now()
+	hour = now.strftime("%H")
+	if (int(hour) == 1):
+		return True
+	
+	return False
