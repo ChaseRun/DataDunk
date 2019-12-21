@@ -116,9 +116,6 @@ def tweetDailyLeaders(api):
 	games = data.find({"date": day})
 
 
-	api.update_status("aws test")
-	exit()
-
 	players = []
 
 	# add players to list
