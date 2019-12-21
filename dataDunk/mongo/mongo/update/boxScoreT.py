@@ -14,6 +14,7 @@ def updateBoxScoreTraditional():
 
 	# check ifits 1:00am, (update time)
 	if not checkUpdate():
+		print("Not 1:00am")
 		return
 
 	headers = {

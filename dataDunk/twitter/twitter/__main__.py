@@ -106,6 +106,12 @@ def getBoxScoreTable():
 	return cluster['nba_data']["boxScoreTraditional"]
 
 def tweetDailyLeaders(api):
+	
+	# check ifits 8:00am, (update time)
+	if not checkUpdate():
+		print("Not 8:00am")
+		return
+
 	numLeaders = 5
 
 	# get day
