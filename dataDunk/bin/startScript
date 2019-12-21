@@ -1,15 +1,11 @@
 #!/bin/bash
 
 # Handles Updating mongoDB and Tweeting
+cd ~/DataDunk/dataDunk
 
-# update Mongo at 1:00am
-cd mongo
-python3 mongo
-cd ..
+# database update
+python mongo/mongo boxScoreTraditional
 
-# tweet at 8:00am
-cd twitter
-python3 twitter
-cd ..
-
+# tweet
+python twitter/twitter
 

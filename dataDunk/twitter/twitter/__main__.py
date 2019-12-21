@@ -106,7 +106,9 @@ def getBoxScoreTable():
 	return cluster['nba_data']["boxScoreTraditional"]
 
 def tweetDailyLeaders(api):
-	
+
+	api.update_status("aws start script works")
+
 	# check ifits 8:00am, (update time)
 	if not checkUpdate():
 		print("Not 8:00am")
@@ -121,7 +123,6 @@ def tweetDailyLeaders(api):
 	month = printDay[3:]
 	printDay = printDay[3:]
 	printDay = numToMonth(month) + " " + printDay
-
 
 
 	# get games
