@@ -12,6 +12,19 @@ from update.helperFunctions import *
 
 def updateBoxScoreTraditional():
 
+
+
+	headers = {
+	    'Host': 'stats.nba.com',
+	    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+	    'Accept': 'application/json, text/plain, */*',
+	    'Accept-Language': 'en-US,en;q=0.5',
+	    'Referer': 'https://stats.nba.com/',
+	    'Accept-Encoding': 'gzip, deflate, br',
+	    'Connection': 'keep-alive',
+	}
+
+
 	boxScoreTable = getTable("boxScoreTraditional")
 	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
@@ -38,7 +51,7 @@ def updateBoxScoreTraditional():
 			for p in period:
 				
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, timeout=50)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, headers=headers, timeout=50)
 
 					stats = []
 
