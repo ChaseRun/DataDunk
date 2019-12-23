@@ -55,7 +55,7 @@ def updateBoxScoreTraditional():
 			for p in period:
 				
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="45.77.91.13:30325", timeout=50)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="107.178.4.215:31376", timeout=50)
 
 					stats = []
 
