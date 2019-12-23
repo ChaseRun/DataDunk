@@ -13,9 +13,9 @@ from update.helperFunctions import *
 def updateBoxScoreTraditional():
 
 	# check ifits 1:00am, (update time)
-	if not checkUpdate():
-		print("Not 1:00am")
-		return
+	#if not checkUpdate():
+	#	print("Not 1:00am")
+	#	return
 
 	headers = {
 	    'Host': 'stats.nba.com',
@@ -36,6 +36,7 @@ def updateBoxScoreTraditional():
 
 	print("Getting BoxScore Info...")
 
+	count = 1
 	for game in newGames:
 		if game["_id"] not in pastGames:
 			
@@ -54,7 +55,7 @@ def updateBoxScoreTraditional():
 			for p in period:
 				
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, headers=headers, timeout=50)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="45.77.91.13:30325", timeout=50)
 
 					stats = []
 
@@ -115,3 +116,5 @@ def updateBoxScoreTraditional():
 					time.sleep(120)
 
 			boxScoreTable.insert_one(submit)
+			print (count)
+			count = count + 1

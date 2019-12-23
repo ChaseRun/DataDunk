@@ -94,8 +94,8 @@ def checkUpdate():
 	# return true if its 8:00am
 	now = datetime.now()
 	hour = now.strftime("%H")
-	if (int(hour) == 8):
-		return True
+	#if (int(hour) == 8):
+		#return True
 	
 	return False
 	
@@ -107,12 +107,10 @@ def getBoxScoreTable():
 
 def tweetDailyLeaders(api):
 
-	api.update_status("aws start script works")
-
 	# check ifits 8:00am, (update time)
-	if not checkUpdate():
-		print("Not 8:00am")
-		return
+	#if not checkUpdate():
+	#	print("Not 8:00am")
+	#	return
 
 	numLeaders = 5
 
@@ -200,7 +198,7 @@ def tweetDailyLeaders(api):
 
 	topFG3M = topFG3M[::-1]
 	lastPlayer = numLeaders 
-	while topStl[lastPlayer]["FG3M"] == topStl[numLeaders]["FG3M"]:
+	while topFG3M[lastPlayer]["FG3M"] == topFG3M[numLeaders]["FG3M"]:
 		lastPlayer = lastPlayer + 1
 	topFG3M = topFG3M[0: lastPlayer]
 	
@@ -239,7 +237,7 @@ def tweetDailyLeaders(api):
 
 	# tweet 3 points
 	rank = 1	
-	tweet = "3 Point sLeaders " + printDay + "\n\n"
+	tweet = "3 Point Leaders " + printDay + "\n\n"
 	for player in topFG3M:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["FG3M"]) + "\n"
 		rank = rank + 1
