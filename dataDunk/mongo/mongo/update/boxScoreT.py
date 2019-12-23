@@ -9,6 +9,8 @@ import requests
 import time
 import datetime
 from update.helperFunctions import *
+from itertools import cycle
+import traceback
 
 def updateBoxScoreTraditional():
 
@@ -31,6 +33,11 @@ def updateBoxScoreTraditional():
 	boxScoreTable = getTable("boxScoreTraditional")
 	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
+
+
+	# get proxies
+	proxies = get_proxies()
+	proxy_pool = cycle(proxies)
 
 	period = [0, 1, 2, 3, 4, 5]
 
@@ -55,7 +62,11 @@ def updateBoxScoreTraditional():
 			for p in period:
 				
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="45.77.91.13:30325", timeout=50)
+
+					proxy = next(proxy_pool)
+					print(proxy)
+
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=30)
 
 					stats = []
 
@@ -110,10 +121,10 @@ def updateBoxScoreTraditional():
 					submit["period"][p]["homeTeamStats"] = homeStats
 					submit["period"][p]["awayTeamStats"] = awayStats
 
-				except requests.exceptions.ReadTimeout:
+				except:
 					print("Read Timeout")
 					print("Waiting 1 min until retry")
-					time.sleep(120)
+					time.sleep(1)
 
 			boxScoreTable.insert_one(submit)
 			print (count)
