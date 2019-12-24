@@ -66,15 +66,15 @@ def updateBoxScoreTraditional():
 			p = 0
 			while p < len(period):
 				
+				if (proxyWorked):
+					proxy = prevProxy
+					proxyWorked = False
+				else:
+					proxy = next(proxy_pool)
+				print(proxy)
+
 				try:
 
-					if (proxyWorked):
-						proxy = prevProxy
-						proxyWorked = False
-					else:
-						proxy = next(proxy_pool)
-					
-					print(proxy)
 
 					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
 
