@@ -44,6 +44,10 @@ def updateBoxScoreTraditional():
 	print("Getting BoxScore Info...")
 
 	count = 1
+
+	prevproxy = ""
+	proxyWorked = False
+
 	for game in newGames:
 		if game["_id"] not in pastGames:
 			
@@ -59,14 +63,20 @@ def updateBoxScoreTraditional():
 				"period": periodArr
 			}		
 
-			for p in period:
+			p = 0
+			while p < len(period):
 				
 				try:
 
-					proxy = next(proxy_pool)
+					if (proxyWorked):
+						proxy = prevProxy
+						proxyWorked = False
+					else:
+						proxy = next(proxy_pool)
+					
 					print(proxy)
 
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=30)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
 
 					stats = []
 
@@ -122,10 +132,15 @@ def updateBoxScoreTraditional():
 					submit["period"][p]["awayTeamStats"] = awayStats
 
 				except:
+					proxyWorked = False
 					print("Read Timeout")
 					print("Waiting 1 min until retry")
 					time.sleep(1)
 
+			p = p + 1
+			proxyWorked = True
+			prevProxy = proxy
+			
 			boxScoreTable.insert_one(submit)
 			print (count)
 			count = count + 1

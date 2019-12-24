@@ -129,6 +129,7 @@ def tweetDailyLeaders(api):
 
 
 	players = []
+	
 
 	# add players to list
 	for game in games:
