@@ -210,6 +210,8 @@ def tweetDailyLeaders(api):
 	for player in topStl:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["STL"]) + "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)
 
 	# tweet blocks
@@ -218,6 +220,8 @@ def tweetDailyLeaders(api):
 	for player in topBlk:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["BLK"]) + "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)	
 	
 	# tweet rebounds
@@ -226,6 +230,8 @@ def tweetDailyLeaders(api):
 	for player in topReb:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["REB"])+ "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)
 
 	# tweet assists
@@ -234,6 +240,8 @@ def tweetDailyLeaders(api):
 	for player in topAst:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["AST"]) + "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)
 
 	# tweet 3 points
@@ -242,6 +250,8 @@ def tweetDailyLeaders(api):
 	for player in topFG3M:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["FG3M"]) + "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)
 
 	# tweet points
@@ -250,6 +260,8 @@ def tweetDailyLeaders(api):
 	for player in topPts:
 		tweet = tweet + str(rank) + ". " + str(player["PLAYER_NAME"]) + " " + str(player["PTS"]) + "\n"
 		rank = rank + 1
+		if rank == 9:
+			break
 	api.update_status(tweet)
 
 
