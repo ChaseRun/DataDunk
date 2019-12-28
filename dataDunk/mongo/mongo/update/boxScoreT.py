@@ -10,6 +10,7 @@ import time
 import datetime
 from update.helperFunctions import *
 from itertools import cycle
+import pdb
 
 def updateBoxScoreTraditional():
 
@@ -50,7 +51,7 @@ def updateBoxScoreTraditional():
 				"home_team": game["home_team_id"],
 				"away_team": game["away_team_id"],
 				"date": game["game_date"],
-				"boxScore": periodArr
+				"period": periodArr
 			}		
 
 			p = 0
@@ -69,6 +70,11 @@ def updateBoxScoreTraditional():
 				try:
 					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
 
+				except:
+					print("Proxy failed: " + str(proxy))					
+					time.sleep(2)
+				
+				else:
 					print("Proxy worked: " + str(proxy))
 
 					stats = []
@@ -125,10 +131,6 @@ def updateBoxScoreTraditional():
 					submit["period"][p]["awayTeamStats"] = awayStats
 
 					p = p + 1
-
-				except:
-					print("Proxy failed: " + str(proxy))					
-					time.sleep(2)
 
 			boxScoreTable.insert_one(submit)
 			print (count)

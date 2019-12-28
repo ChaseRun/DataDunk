@@ -3,11 +3,9 @@ import mongo
 from update.boxScoreT import *
 
 @click.command()
-@click.argument("collection", nargs=1)
-def main(collection):
+def main():
 
-	if collection == "boxScoreTraditional":
-		updateBoxScoreTraditional()
+	updateBoxScoreTraditional()
 
 
 	return
