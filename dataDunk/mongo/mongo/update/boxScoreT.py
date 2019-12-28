@@ -49,14 +49,16 @@ def updateBoxScoreTraditional():
 			}		
 
 			p = 0
+			proxyCount = 0
 			while p < len(period):
 
-				if proxy == firstProxy:
+				if proxyCount >= len(proxies):
 					proxies = get_proxies()
 					proxyPool = cycle(proxies)
 					print("Generated new proxy list")
 
 				proxy = next(proxyPool)
+				proxyCount = proxyCount + 1
 
 				try:
 					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
