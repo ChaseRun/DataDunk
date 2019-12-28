@@ -35,8 +35,6 @@ def updateBoxScoreTraditional():
 			proxyPool = cycle(proxies)
 
 			firstProxy = list(proxies)[0]
-
-			print(proxies)
 			
 			periodArr = []
 			for p in period:
@@ -56,6 +54,7 @@ def updateBoxScoreTraditional():
 				if proxy == firstProxy:
 					proxies = get_proxies()
 					proxyPool = cycle(proxies)
+					print("Generated new proxy list")
 
 				proxy = next(proxyPool)
 
