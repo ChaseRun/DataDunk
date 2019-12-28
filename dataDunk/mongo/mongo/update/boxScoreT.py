@@ -21,6 +21,11 @@ def updateBoxScoreTraditional():
 	boxScoreTable = getTable("boxScoreTraditional")
 	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
+	pastGameIds = []
+
+	for game in pastGames:
+		pastGameIds.append(game["_id"])
+
 
 	period = [0, 1, 2, 3, 4, 5]
 
@@ -29,7 +34,7 @@ def updateBoxScoreTraditional():
 
 	print("Getting BoxScore Info...")
 	for game in newGames:
-		if game["_id"] not in pastGames:
+		if game["_id"] not in pastGameIds:
 
 			proxies = get_proxies()
 			proxyPool = cycle(proxies)
@@ -45,7 +50,7 @@ def updateBoxScoreTraditional():
 				"home_team": game["home_team_id"],
 				"away_team": game["away_team_id"],
 				"date": game["game_date"],
-				"period": periodArr
+				"boxScore": periodArr
 			}		
 
 			p = 0
