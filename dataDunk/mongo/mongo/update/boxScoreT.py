@@ -56,6 +56,7 @@ def updateBoxScoreTraditional():
 					proxies = get_proxies()
 					proxyPool = cycle(proxies)
 					print("Generated new proxy list")
+					proxyCount = 0
 
 				proxy = next(proxyPool)
 				proxyCount = proxyCount + 1
