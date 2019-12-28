@@ -17,15 +17,8 @@ def updateBoxScoreTraditional():
 	#	print("Not 1:00am")
 	#	return
 
-	headers = {
-	    'Host': 'stats.nba.com',
-	    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
-	    'Accept': 'application/json, text/plain, */*',
-	    'Accept-Language': 'en-US,en;q=0.5',
-	    'Referer': 'https://stats.nba.com/',
-	    'Accept-Encoding': 'gzip, deflate, br',
-	    'Connection': 'keep-alive',
-	}
+	proxies = get_proxies()
+	proxy_pool = cycle(proxies)
 
 
 	boxScoreTable = getTable("boxScoreTraditional")
@@ -34,9 +27,12 @@ def updateBoxScoreTraditional():
 
 	period = [0, 1, 2, 3, 4, 5]
 
-	print("Getting BoxScore Info...")
-
 	count = 1
+	prevProxy = ""
+	proxy = ""
+	proxyWorked = False
+
+	print("Getting BoxScore Info...")
 	for game in newGames:
 		if game["_id"] not in pastGames:
 			
@@ -52,10 +48,19 @@ def updateBoxScoreTraditional():
 				"period": periodArr
 			}		
 
-			for p in period:
+			p = 0
+			while p < len(period):
 				
+				if proxyWorked:
+					proxy = prevProxy
+				else:
+					proxy = next(proxyPool)
+
+
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="107.178.4.215:31376", timeout=50)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
+
+					print("Proxy worked: " + proxy)
 
 					stats = []
 
@@ -110,10 +115,15 @@ def updateBoxScoreTraditional():
 					submit["period"][p]["homeTeamStats"] = homeStats
 					submit["period"][p]["awayTeamStats"] = awayStats
 
-				except requests.exceptions.ReadTimeout:
-					print("Read Timeout")
-					print("Waiting 1 min until retry")
-					time.sleep(120)
+					p = p + 1
+					proxyWorked = True
+					prevProxy = proxy
+
+				except:
+					print("Proxy failed: " + proxy)
+					prevProxy = False
+					
+					time.sleep(2)
 
 			boxScoreTable.insert_one(submit)
 			print (count)
