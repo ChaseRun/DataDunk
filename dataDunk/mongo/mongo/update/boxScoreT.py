@@ -1,5 +1,6 @@
 """
 Update boxScoreTraditional collection
+
 Chase Austin
 """
 from nba_api.stats.endpoints import boxscoretraditionalv2
@@ -9,8 +10,6 @@ import time
 import datetime
 from update.helperFunctions import *
 from itertools import cycle
-import traceback
-
 
 def updateBoxScoreTraditional():
 
@@ -19,13 +18,6 @@ def updateBoxScoreTraditional():
 	#	print("Not 1:00am")
 	#	return
 
-<<<<<<< HEAD
-	proxies = get_proxies()
-	proxy_pool = cycle(proxies)
-
-
-=======
->>>>>>> 4bbf53035cbf4d78b4cf69baffc8e2024afe465a
 	boxScoreTable = getTable("boxScoreTraditional")
 	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
@@ -33,13 +25,18 @@ def updateBoxScoreTraditional():
 	period = [0, 1, 2, 3, 4, 5]
 
 	count = 1
-	prevProxy = ""
 	proxy = ""
-	proxyWorked = False
 
 	print("Getting BoxScore Info...")
 	for game in newGames:
 		if game["_id"] not in pastGames:
+
+			proxies = get_proxies()
+			proxyPool = cycle(proxies)
+
+			firstProxy = list(proxies)[0]
+
+			print(proxies)
 			
 			periodArr = []
 			for p in period:
@@ -55,23 +52,18 @@ def updateBoxScoreTraditional():
 
 			p = 0
 			while p < len(period):
-				
-				if proxyWorked:
-					proxy = prevProxy
-				else:
-					proxy = next(proxyPool)
 
+				if proxy == firstProxy:
+					proxies = get_proxies()
+					proxyPool = cycle(proxies)
+
+				proxy = next(proxyPool)
 
 				try:
-<<<<<<< HEAD
 					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
 
-					print("Proxy worked: " + proxy)
+					print("Proxy worked: " + str(proxy))
 
-=======
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="45.77.91.13:30325", timeout=50)
-					
->>>>>>> 4bbf53035cbf4d78b4cf69baffc8e2024afe465a
 					stats = []
 
 					stats.append(data.player_stats.get_dict())
@@ -126,13 +118,9 @@ def updateBoxScoreTraditional():
 					submit["period"][p]["awayTeamStats"] = awayStats
 
 					p = p + 1
-					proxyWorked = True
-					prevProxy = proxy
 
 				except:
-					print("Proxy failed: " + proxy)
-					prevProxy = False
-					
+					print("Proxy failed: " + str(proxy))					
 					time.sleep(2)
 
 			boxScoreTable.insert_one(submit)
