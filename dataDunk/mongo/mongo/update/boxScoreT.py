@@ -1,6 +1,5 @@
 """
 Update boxScoreTraditional collection
-
 Chase Austin
 """
 from nba_api.stats.endpoints import boxscoretraditionalv2
@@ -9,6 +8,9 @@ import requests
 import time
 import datetime
 from update.helperFunctions import *
+from itertools import cycle
+import traceback
+
 
 def updateBoxScoreTraditional():
 
@@ -17,10 +19,13 @@ def updateBoxScoreTraditional():
 	#	print("Not 1:00am")
 	#	return
 
+<<<<<<< HEAD
 	proxies = get_proxies()
 	proxy_pool = cycle(proxies)
 
 
+=======
+>>>>>>> 4bbf53035cbf4d78b4cf69baffc8e2024afe465a
 	boxScoreTable = getTable("boxScoreTraditional")
 	newGames = gameIds()
 	pastGames = boxScoreTable.find({})
@@ -58,10 +63,15 @@ def updateBoxScoreTraditional():
 
 
 				try:
+<<<<<<< HEAD
 					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
 
 					print("Proxy worked: " + proxy)
 
+=======
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy="45.77.91.13:30325", timeout=50)
+					
+>>>>>>> 4bbf53035cbf4d78b4cf69baffc8e2024afe465a
 					stats = []
 
 					stats.append(data.player_stats.get_dict())
