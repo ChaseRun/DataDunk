@@ -52,7 +52,9 @@ def updateBoxScoreTraditional():
 				"away_team": game["away_team_id"],
 				"date": game["game_date"],
 				"period": periodArr
-			}		
+			}
+
+			print("date is "+ submit["date"])		
 
 			p = 0
 			proxyCount = 0
