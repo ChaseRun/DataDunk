@@ -12,10 +12,10 @@ def main():
 	# get twitter connection
 	api = connect()
 
-	api.update_status("Test aws script")
+	#api.update_status("Test aws script")
 
-	#tweetDailyLeaders(api)
-	#tweetStandOutPlayers(api)
+	tweetDailyLeaders(api)
+	tweetStandOutPlayers(api)
 	#tweetWeeklyLeaders(api)
 	#tweetSeasonLeaders(api)
 
