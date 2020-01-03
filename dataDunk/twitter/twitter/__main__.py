@@ -2,6 +2,8 @@ import click
 import mongo
 from functions import *
 import tweepy
+from datetime import datetime, timedelta, timezone
+import pytz
 
 @click.command()
 def main():
@@ -14,8 +16,10 @@ def main():
 
 	#api.update_status("Test aws script")
 
-	tweetDailyLeaders(api)
-	tweetStandOutPlayers(api)
+	day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
+
+	tweetDailyLeaders(api, day)
+	tweetStandOutPlayers(api, day)
 	#tweetWeeklyLeaders(api)
 	#tweetSeasonLeaders(api)
 

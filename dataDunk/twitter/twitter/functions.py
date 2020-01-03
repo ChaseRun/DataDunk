@@ -106,7 +106,7 @@ def getBoxScoreTable():
 	cluster = MongoClient('mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority')
 	return cluster['nba_data']["boxScoreTraditional"]
 
-def tweetDailyLeaders(api):
+def tweetDailyLeaders(api, day):
 
 	# check ifits 8:00am, (update time)
 	#if not checkUpdate():
@@ -116,8 +116,7 @@ def tweetDailyLeaders(api):
 	numLeaders = 5
 
 	# get day
-	day = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')
-	printDay = datetime.strftime(datetime.now() - timedelta(1), '%m %d, %Y')
+	printDay = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m %d, %Y')
 
 	month = printDay[3:]
 	printDay = printDay[3:]
@@ -415,7 +414,7 @@ def tweetWeeklyLeaders(api):
 def tweetSeasonLeaders(api):
 	return
 
-def tweetStandOutPlayers(api):
+def tweetStandOutPlayers(api, day):
 	
 	# check ifits 8:00am, (update time)
 	#if not checkUpdate():
@@ -425,8 +424,7 @@ def tweetStandOutPlayers(api):
 	numLeaders = 5
 
 	# get day
-	day = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')
-	printDay = datetime.strftime(datetime.now() - timedelta(1), '%m %d, %Y')
+	printDay = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m %d, %Y')
 
 	month = printDay[3:]
 	printDay = printDay[3:]
