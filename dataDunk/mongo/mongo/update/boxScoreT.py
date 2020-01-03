@@ -68,11 +68,18 @@ def updateBoxScoreTraditional():
 				proxyCount = proxyCount + 1
 
 				try:
-					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=15)
+					data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, 
+																		end_range="0", 
+																		game_id=str(game["_id"]), 
+																		range_type="0", 
+																		start_period="1", 
+																		start_range=p, 
+																		proxy=proxy, 
+																		timeout=15)
 
 				except:
 					print("Proxy failed: " + str(proxy))					
-					time.sleep(2)
+					time.sleep(1)
 				
 				else:
 					print("Proxy worked: " + str(proxy))
