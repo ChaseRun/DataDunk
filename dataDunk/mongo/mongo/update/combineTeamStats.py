@@ -176,5 +176,3 @@ def combineTeamStats():
 
         count = count + 1
         print("on game " + str(count))
-    
-    print("done with " + str(day))
