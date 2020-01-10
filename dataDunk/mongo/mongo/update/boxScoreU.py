@@ -73,7 +73,8 @@ def updateBoxScoreUsage():
 																		game_id=str(game["_id"]), 
 																		range_type="0", 
 																		start_period="1", 
-																		start_range=p, 
+																		start_range=p,
+																		proxy=proxy, 
 																		timeout=15)
 
 				except:
