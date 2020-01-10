@@ -10,12 +10,12 @@ from update.combineTeamStats import *
 @click.command()
 def main():
 
-	#updateBoxScoreTraditional()
-	#time.sleep(120)
-	#updateBoxScoreUsage()
-	#time.sleep(120)
-	#updateBoxScoreAdvanced()
-	#combinePlayerStats()
+	updateBoxScoreTraditional()
+	time.sleep(120)
+	updateBoxScoreUsage()
+	time.sleep(120)
+	updateBoxScoreAdvanced()
+	combinePlayerStats()
 	combineTeamStats()
 
 	return
