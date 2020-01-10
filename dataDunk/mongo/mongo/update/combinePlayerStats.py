@@ -20,6 +20,7 @@ def combinePlayerStats():
 
     count = 0
 
+    print("Assigning BoxScore stats to individual players...")
     for game in newGames:
 
         # box score traditional

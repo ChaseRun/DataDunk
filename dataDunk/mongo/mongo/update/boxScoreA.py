@@ -1,5 +1,5 @@
 """
-Update boxScoreUsage collection
+Update boxScoreAdvanced collection
 
 Chase Austin
 """
@@ -33,7 +33,7 @@ def updateBoxScoreAdvanced():
 	count = 1
 	proxy = ""
 	
-	print("Getting Box Score Advanced...")	
+	print("Getting BoxScore Advanced...")	
 	for game in newGames:
 		if game["_id"] not in pastGameIds:
 

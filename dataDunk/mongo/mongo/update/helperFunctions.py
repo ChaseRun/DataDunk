@@ -21,7 +21,7 @@ def previousGames():
 	seasonGames = cluster['nba_data']["19-20_Season"]
 
 	sdate = date(2019, 10, 22) # start date
-	edate = date(2020, 4, 15)# end date
+	edate = date(2020, 1, 7)# end date
 
 	delta = edate - sdate # as timedelta
 
