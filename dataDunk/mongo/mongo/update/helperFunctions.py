@@ -1,6 +1,6 @@
 from nba_api.stats.endpoints import boxscoretraditionalv2
 from pymongo import MongoClient
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, date
 import pytz
 import requests
 from lxml.html import fromstring
@@ -12,6 +12,34 @@ def gameIds():
 	seasonGames = cluster['nba_data']["19-20_Season"]
 	day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
 	return seasonGames.find({"game_date": day})
+
+
+def previousGames():
+	
+	# returns date, home_id, and away_id for today's game
+	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
+	seasonGames = cluster['nba_data']["19-20_Season"]
+
+	sdate = date(2019, 10, 22) # start date
+	edate = date(2020, 4, 15)# end date
+
+	delta = edate - sdate # as timedelta
+
+	days = []
+	
+	for i in range(delta.days + 1):
+		day = sdate + timedelta(days = i)
+		realDate = str(day)[5:7]
+		realDate = realDate + "-"
+		realDate = realDate + str(day)[8:]
+		realDate = realDate + "-"
+		realDate = realDate + str(day)[0:4]
+
+		days.append(realDate)
+
+	return days
+
+	
 
 
 def getTable(table):
