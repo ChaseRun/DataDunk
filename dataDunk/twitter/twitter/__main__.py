@@ -19,7 +19,7 @@ def main():
 	day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
 
 	tweetDailyLeaders(api, day)
-	tweetStandOutPlayers(api, day)
+	#tweetStandOutPlayers(api, day)
 	#tweetWeeklyLeaders(api)
 	#tweetSeasonLeaders(api)
 
