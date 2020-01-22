@@ -23,7 +23,7 @@ def connect():
 def numToMonth(month):
 	# convert number to month
 	
-	if  month == 1:
+	if month == 1:
 		return "Jan"
 	elif  month == 2:
 		return "Feb"
@@ -119,10 +119,9 @@ def tweetDailyLeaders(api, day):
 	# get day
 	printDay = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m %d, %Y')
 
-	month = printDay[3:]
+	month = printDay[:3]
 	printDay = printDay[3:]
-	printDay = numToMonth(month) + " " + printDay
-
+	printDay = numToMonth(int(month)) + " " + printDay
 
 	# get games
 	data = getBoxScoreTable()
