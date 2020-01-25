@@ -27,6 +27,9 @@ def updateBoxScoreTraditional():
 	for game in pastGames:
 		pastGameIds.append(game["_id"])
 
+	print(newGames)
+	exit()
+
 
 	period = [0, 1, 2, 3, 4, 5]
 
