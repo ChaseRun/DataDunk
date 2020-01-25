@@ -27,7 +27,7 @@ def updateBoxScoreTraditional():
 	for game in pastGames:
 		pastGameIds.append(game["_id"])
 
-	print(newGames)
+	print(newGames.Count())
 	exit()
 
 
