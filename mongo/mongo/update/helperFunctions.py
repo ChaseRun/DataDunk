@@ -6,12 +6,15 @@ import requests
 from lxml.html import fromstring
 
 
-def gameIds():
+def gameIds(day):
 	# returns date, home_id, and away_id for today's game
 	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
 	seasonGames = cluster['nba_data']["19-20_Season"]
-	day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
 	return seasonGames.find({"game_date": day})
+
+
+def getYesterdaysDate():
+	return datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
 
 
 def previousGames():
@@ -38,6 +41,23 @@ def previousGames():
 		days.append(realDate)
 
 	return days
+
+def dateRange(start, end):
+
+	sdate = date(int(start[6:]), int(start[0:2]), int(start[3:5]))
+	edate = date(int(end[6:]), int(end[0:2]), int(end[3:5]))
+
+	delta = edate - sdate # as timedelta
+
+	days = []
+	
+	for i in range(delta.days + 1):
+		day = sdate + timedelta(days = i)
+		realDate = str(day)[5:7] + "-" + str(day)[8:] + "-" + str(day)[0:4]
+		days.append(realDate)
+
+	return days
+
 
 	
 

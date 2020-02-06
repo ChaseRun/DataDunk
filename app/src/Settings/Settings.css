@@ -1,0 +1,33 @@
+#Settings-Section {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+
+    background: #EDF6FF; 
+    border-right: solid #EDF6FF 5px;
+    border-left: solid #EDF6FF 5px;
+}
+
+#Settings-Header {
+    background: #286FB4;
+    color: white;
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+#Settings-Border {
+    padding: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#Websites {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+}
+
+#Optimize {
+    text-align: center;
+    padding-top: 15px;
+}

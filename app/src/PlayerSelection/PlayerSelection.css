@@ -1,0 +1,35 @@
+#PlayerSelection-Section {
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    
+    border-right: solid #EDF6FF .25px;
+    border-top: solid #EDF6FF .25px;
+}
+
+#PlayerSelection-Header{
+    text-align: center;
+    background: #286FB4;
+    color: white;
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+#PlayerSelection-Section {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: .01px;
+
+    background: #EDF6FF; 
+    border-right: solid #EDF6FF 5px;
+    border-left: solid #EDF6FF 5px;
+}
+
+#PlayerSelection-Border {
+    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 15px;
+}

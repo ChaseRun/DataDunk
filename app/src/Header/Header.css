@@ -1,0 +1,59 @@
+#Title {
+    text-align: center;
+    color: white
+}
+
+#Header-Section {
+    padding: 10px;
+    
+    border-top: solid white 5px;
+    border-left: solid white 5px;
+    border-right: solid white 5px;
+    border-bottom: solid white 10px;
+
+    background: #286FB4;
+}
+
+#Links {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+}
+
+#Twitter {
+    padding-top: 10px;
+    text-align: center;
+}
+
+a {
+    font-size: medium;
+}
+
+#About:link {
+    color: #EDF6FF;
+    text-decoration: underline;
+}
+#About:visited {
+    color: #EDF6FF;
+    text-decoration: underline;
+} 
+#About:active {
+    color: #EDF6FF;
+    text-decoration: underline;
+}
+
+#About:hover {
+    color: orange;
+    text-decoration: underline;
+}
+
+#Description {
+    padding-top: 10px;
+    color: #EDF6FF;
+}
+
+#Description-Text {
+    text-align: center;
+    color: #EDF6FF;
+    font-size: small;
+}

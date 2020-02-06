@@ -1,0 +1,26 @@
+#Legend-Section {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+
+    background: #EDF6FF; 
+    border-right: solid #EDF6FF 5px;
+    border-left: solid #EDF6FF 5px;
+}
+
+#Legend-Header {
+    background: #286FB4;
+    color: white;
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+#Legend-Border {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+p {
+    font-size: small;
+}

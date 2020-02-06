@@ -125,6 +125,9 @@ def tweetDailyLeaders(api, day):
 
 	# get games
 	data = getBoxScoreTable()
+
+	print(day)
+	exit()
 	games = data.find({"date": day})
 
 
@@ -137,6 +140,8 @@ def tweetDailyLeaders(api, day):
 		
 		for player in game["period"][0]["awayTeamPlayerStats"]:
 			players.append(player)
+
+
 
 	topPts = players
 	topAst = players
@@ -168,7 +173,11 @@ def tweetDailyLeaders(api, day):
 	
 	topPts = topPts[::-1]
 	lastPlayer = numLeaders
+
+
+	print ("First")
 	while topPts[lastPlayer]["PTS"] == topPts[numLeaders]["PTS"]:
+
 		lastPlayer = lastPlayer + 1
 	topPts = topPts[0: lastPlayer]
 
