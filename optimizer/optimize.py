@@ -2,6 +2,39 @@ from bs4 import BeautifulSoup
 import requests
 from helperFunctions import *
 import time
+from concatData import *
+
+
+
+playerStatsTable = getTable("19-20_PlayerStats")
+teamTable = getTable("teams")
+
+teams = teamTable.find({})
+teamCount = 1
+
+START = time.time()
+
+for team in teams:
+
+    print("Starting " + team["full_name"] + "\t " + str(teamCount) + " out of 30")
+
+    players = playerStatsTable.find({"team_id": team["_id"]})
+    playerCount = 1
+
+    numPlayers = players.count
+    
+    for player in players:
+        concatMLData(player)
+        print(str(playerCount) + " out of " + str(numPlayers))
+        
+
+
+END = time.time()
+print("\n\nFinished")
+print("Took " + str(((END - START) / 60 / 60)) + " hours.")
+
+exit()
+
 
 players = getTodaysPlayers()
 

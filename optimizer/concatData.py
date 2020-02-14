@@ -1,67 +1,268 @@
 from pymongo import MongoClient
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
 import numpy as np
-import bsonnumpy
-from bson.json_util import dumps
-
-client = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
-collection = client['nba_data']["19-20_PlayerStats"]
-
-queryFilter = {'_id': 202695 }
-queryProjection = { '$arrayElmAt': [ '$boxScoreTraditional', 68] }
-
-proj = { '_id': 0, 
-         "player_name": 0, 
-         "team_id": 0, 
-         "boxScoreAdvanced": 0, 
-         "boxScoreusage": 0, 
-         'boxScoreTraditional': {'$elemMatch': {"numGame": 0} } 
-         }
-
-test = collection.find_one(queryFilter, proj)
-
-print(dumps(test))
-#exit()
-
-dtype = np.dtype([('MIN', 'S10'), 
-                ('FMG', np.int64), 
-                ('FGA', np.int64), 
-                ('FG_PCT', np.double), 
-                ('FG3M', np.int64), 
-                ('FG3A', np.int64), 
-                ('FG3_PCT', np.double), 
-                ('FTM', np.int64), 
-                ('FTA', np.int64),
-                ('FT_PCT', np.double), 
-                ('OREB', np.int64), 
-                ('DREB', np.int64), 
-                ('REB', np.int64), 
-                ('AST', np.int64), 
-                ('STL', np.int64), 
-                ('BLK', np.int64), 
-                ('TO', np.int64), 
-                ('PF', np.int64), 
-                ('PTS', np.int64), 
-                ('PLUS_MINUS', np.int64)])
-
-ndarray = bsonnumpy.sequence_to_ndarray(collection.find_raw_batches(queryFilter, proj), dtype, collection.count(queryFilter))
-
-print(ndarray)
+from sklearn.linear_model import LogisticRegression
+import time
 
 
-# for each game
+# player statistical performance for one game
+def playerStatsOne(playerId, game, statType):
 
-# create player dict
+    playerStatsTable = getTable("19-20_PlayerStats")
+    stats = playerStatsTable.find_one({"_id": playerId})
 
-# traditional
-# advanced
-# usage
+    # get most recent game
+    boxScoreT = stats["boxScoreTraditional"][game]
+    boxScoreA = stats["boxScoreAdvanced"][game]
+    boxScoreU = stats["boxScoreUsage"][game]
 
-# add each to player dict
+    returnStats = []
 
-# add player last game stats
+    del boxScoreT["GAME_ID"]
+    del boxScoreT["START_POSITION"]
+    del boxScoreT["COMMENT"]
+    del boxScoreT["numGame"]
 
-# add average player stats over last 5 games
+    del boxScoreA["GAME_ID"]
+    del boxScoreA["START_POSITION"]
+    del boxScoreA["COMMENT"]
+    del boxScoreA["numGame"]
+    del boxScoreA["MIN"]
+    del boxScoreA["home/away"]
 
-# add average team stats overt last 5 games
+    del boxScoreU["GAME_ID"]
+    del boxScoreU["START_POSITION"]
+    del boxScoreU["COMMENT"]
+    del boxScoreU["numGame"]
+    del boxScoreU["MIN"]
+    del boxScoreU["home/away"]
 
-# add team stats over season
+    # boxScoreTraditional stats
+    for key in boxScoreT:
+        if boxScoreT[key] == None:
+            returnStats.append(0)
+        else:
+
+            if key == "MIN":
+                returnStats.append(extractMin(boxScoreT[key]))
+            else:
+                returnStats.append(boxScoreT[key])
+
+     # boxScoreTraditional stats
+    for key in boxScoreA:
+        if boxScoreA[key] == None:
+            returnStats.append(0)
+        else:
+            returnStats.append(boxScoreA[key])
+
+     # boxScoreTraditional stats
+    for key in boxScoreU:
+        if boxScoreU[key] == None:
+            returnStats.append(0)
+        else:
+            returnStats.append(boxScoreU[key])
+
+    return returnStats    
+
+# average player statistical performance across past N games
+# N is 5 for now
+def playerStatsWindow(playerId, start, end, statType):
+
+    stats = []
+
+    count = start
+
+    while count <= end:
+        stats.append(playerStatsOne(playerId, count, statType))
+        count = count + 1
+
+    return list(map(lambda x: sum(x)/len(x), zip(*stats)))
+
+
+
+# opposing team defense average statistical performance across the entire season
+def teamStatsOne(teamId, game, statType):
+
+    teamStatsTable = getTable("19-20_TeamStats")
+    stats = teamStatsTable.find_one({"_id": teamId})
+
+    boxScoreT = stats["boxScoreTraditional"][game]
+    boxScoreA = stats["boxScoreAdvanced"][game]
+
+    returnStats = []
+
+    # add keys to return array
+    keyAdd = True
+
+    # get boxScoreT sums
+    keys = list(boxScoreT.keys())
+    keys.remove("GAME_ID")
+    keys.remove("numGame")
+    
+    for key in keys:
+        if boxScoreT[key] == None:
+            returnStats.append(0)
+        else:
+            if key == "MIN":
+                returnStats.append(extractMin(boxScoreT[key]))
+            else:
+                returnStats.append(boxScoreT[key])
+
+    # get boxScoreA sums
+    keys = list(boxScoreA.keys())
+    keys.remove("GAME_ID")
+    keys.remove("numGame")
+    keys.remove("MIN")
+    keys.remove("home/away")
+
+    for key in keys:
+        if boxScoreA[key] == None:
+            returnStats.append(0)
+        else:
+            returnStats.append(boxScoreA[key])
+
+    return returnStats
+    
+
+
+# opposing team defense average statistical performance acorss past N games
+# N is 5 for now
+def teamStatsWindow(teamId, start, end, statType):
+
+    stats = []
+
+    count = start
+
+    while count <= end:
+        stats.append(teamStatsOne(teamId, count, statType))
+        count = count + 1
+
+    return list(map(lambda x: sum(x)/len(x), zip(*stats)))
+
+
+def getTable(table):
+	# returns a mongodb table
+	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
+	return cluster['nba_data'][table]
+
+def getSalary(salary):
+    sal = salary.translate({ord('$'): None})
+    return int(sal.translate({ord(','): None}))
+
+def getTeam(team):
+    return team[1:4]
+
+def getPosition(player):
+    return player[7:len(player)-1]
+
+
+def extractMin(min):
+
+    returnMin = 0
+
+    if len(min) == 4:
+        returnMin = int(min[0])
+        seconds = int(min[2:])
+        seconds = seconds / 60
+        return returnMin + seconds
+
+    elif len(min) == 5:
+        returnMin = int(min[:2])
+        seconds = int(min[3:])
+        seconds = seconds / 60
+        return returnMin + seconds
+
+    else:
+        return 0
+
+def getTodaysOpponetId(teamId):
+    
+    gamesTable = getTable("19-20_Season")
+    day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
+    todayGames = gamesTable.find({"game_date": day})
+
+    for game in todayGames:
+        if game["home_team_id"] == teamId:
+            
+            return game["away_team_id"]
+        
+        elif game["away_team_id"] == teamId:
+            
+            return game["home_team_id"]
+
+
+def concatMLData(player):
+
+    playerStatsTable = getTable("19-20_PlayerStats")
+    teamStatsTable = getTable("19-20_TeamStats")
+    gamesTable = getTable("19-20_Season")
+
+    playerStats = playerStatsTable.find_one({"_id": player["_id"]})
+
+    if playerStats == None:
+        return
+
+    playerId = player["_id"]
+
+    lastGame = len(playerStats["boxScoreTraditional"])
+
+    # 5 game window
+    start = 0
+    end = 4
+
+    categories = ["FG3M", "FGM", "FTM", "REB", "AST", "BLK", "STL", "TO"]
+
+    totalStart = time.time()
+
+    while start < lastGame - 1:
+        
+        Y_Train = {}
+
+        # player performance last game
+        statsP1 = playerStatsOne(playerId, end, "playerLast")
+
+        # player average performance over last 5 games
+        statsP2 = playerStatsWindow(playerId, start, end, "playerFive") 
+
+        # get opposing team id
+        gameTrain = playerStats["boxScoreTraditional"][end + 1]["GAME_ID"]
+        otherTeamSide = (playerStats["boxScoreTraditional"][end + 1]["home/away"])
+        otherTeam = gamesTable.find_one({"_id": gameTrain})
+        teamId = 0
+        if otherTeamSide == 0:
+            teamId = otherTeam["home_team_id"]
+        else:
+            teamId = otherTeam["away_team_id"]
+
+        # opopsing team performance over season
+        statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason")
+
+        # opposing team performance over last 5 games
+        statsT2 = teamStatsWindow(teamId, start, end, "TeamFive")
+
+        # combine x vals
+        X_Vals = statsP1 + statsP2 + statsT1 + statsT2
+
+        # add X vals to player
+        playerStatsTable.update({"_id":  playerId}, { "$push": { "ML_Data.X_Vals": X_Vals }})
+    
+        # add Y vals to player
+        for cat in categories:
+            Y_val = playerStats["boxScoreTraditional"][end + 1][cat]
+            
+            if Y_val == None:
+                Y_val = 0
+            
+            Y_Train[cat] = Y_val
+
+        playerStatsTable.update({"_id":  playerId}, { "$push": { "ML_Data.Y_Vals": Y_Train }})
+
+        start = start + 1
+        end = end + 1
+
+    totalEnd = time.time()
+
+    print("\t" + player["player_name"] + "\t" + str(totalEnd - totalStart) + " seconds")
+    
