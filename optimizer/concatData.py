@@ -217,6 +217,8 @@ def concatMLData(player):
     totalStart = time.time()
 
     while end < lastGame - 1:
+
+        print("current: " + str(end) = " / last: " + str(lastGame))
         
         Y_Train = {}
 
