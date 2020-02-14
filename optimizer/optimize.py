@@ -24,7 +24,7 @@ for team in teams:
     numPlayers = players.count
     
     for player in players:
-        concatMLData(player, float(int(playerCount / numPlayers)))
+        concatMLData(player, float(playerCount / numPlayers))
         
 
 
