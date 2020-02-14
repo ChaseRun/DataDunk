@@ -254,10 +254,9 @@ def concatMLData(player):
             
             if Y_val == None:
                 Y_val = 0
-            
-            Y_Train[cat] = Y_val
 
-        playerStatsTable.update({"_id":  playerId}, { "$push": { "ML_Data.Y_Vals": Y_Train }})
+            place = "ML_Data.Y_Vals" + cat
+            playerStatsTable.update({"_id":  playerId}, { "$push": { place: Y_val}})
 
         start = start + 1
         end = end + 1

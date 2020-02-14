@@ -25,7 +25,7 @@ for team in teams:
     
     for player in players:
         concatMLData(player)
-        print(str(playerCount) + "/" + str(numPlayers) + "Players")
+        #print(str(playerCount) + "/" + str(numPlayers) + "Players")
         
 
 END = time.time()
