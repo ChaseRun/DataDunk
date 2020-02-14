@@ -193,7 +193,7 @@ def getTodaysOpponetId(teamId):
             return game["home_team_id"]
 
 
-def concatMLData(player, percent):
+def concatMLData(player):
 
     playerStatsTable = getTable("19-20_PlayerStats")
     teamStatsTable = getTable("19-20_TeamStats")
@@ -264,5 +264,5 @@ def concatMLData(player, percent):
 
     totalEnd = time.time()
 
-    print("\t" + player["player_name"] + "\t" + str(int(totalEnd - totalStart)) + " seconds\t" + str(percent) + "%")
+    print("\t" + player["player_name"] + "\t" + str(int(totalEnd - totalStart)) + " seconds")
     

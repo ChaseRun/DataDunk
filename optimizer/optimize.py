@@ -24,7 +24,8 @@ for team in teams:
     numPlayers = players.count
     
     for player in players:
-        concatMLData(player, float(playerCount / numPlayers))
+        concatMLData(player)
+        print(str(playerCount) + "/" + (numPlayers) + "Players")
         
 
 
