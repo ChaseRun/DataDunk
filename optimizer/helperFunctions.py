@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+import time
 
 
 # player statistical performance for one game
@@ -244,7 +245,11 @@ def trainTestModel(player):
     for cat in categories:
         Y_Train[cat] = []
 
+    totalStart = time.time()
+
     while end < lastGame - 1:
+
+        start1 = time.time()
 
         # player performance last game
         statsP1 = playerStatsOne(playerId, end, "playerLast")
@@ -281,13 +286,22 @@ def trainTestModel(player):
                 Y_val = 0
             Y_Train[cat].append(Y_val)
 
+        end1 = time.time()
+
         # iterate start and end games
         print("done with iteration\tstart: " + str(start) + "\tend: " + str(end))
+        print("took " + str(end1 - start1) + " seconds")
         
         start = start + 1
         end = end + 1
 
+    totalEnd = time.time()
+
+    print("total Player took " + str(totalEnd - totalStart)+ " seconds")
+
     for cat in categories:
+
+        
 
         # get test vals for upcomming game
        # print("done getting testing_data")
