@@ -28,7 +28,6 @@ for team in teams:
         #getNewStat(player)
         concatMLData(player)
         #print(str(playerCount) + "/" + str(numPlayers) + "Players")
-        exit()
         
 
 END = time.time()
