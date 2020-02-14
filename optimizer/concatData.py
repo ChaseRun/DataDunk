@@ -218,8 +218,6 @@ def concatMLData(player):
 
     while end < lastGame - 1:
 
-        print("current: " + str(end) + " / last: " + str(lastGame))
-        
         Y_Train = {}
 
         # player performance last game
