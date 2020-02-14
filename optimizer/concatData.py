@@ -267,3 +267,38 @@ def concatMLData(player):
 
     print("\t" + player["player_name"] + "\t" + str(int(totalEnd - totalStart)) + " seconds")
     
+
+def getNewStat(player):
+
+    playerId = player["_id"]
+
+    playerStatsTable = getTable("19-20_PlayerStats")
+
+    player = playerStatsTable.find_one({"_id": playerId})
+
+    count = 0
+
+    totalGames = len(player["boxScoreTraditional"])
+
+    while count < totalGames:
+
+        PTS = player["boxScoreTraditional"][count]["PTS"]
+        FG = player["boxScoreTraditional"][count]["FGM"] + player["boxScoreTraditional"][count]["FG3M"]
+        FGA = player["boxScoreTraditional"][count]["FGA"] + player["boxScoreTraditional"][count]["FG3A"]
+        FTA = player["boxScoreTraditional"][count]["FTA"]
+        FT = player["boxScoreTraditional"][count]["FTM"]
+        ORB = player["boxScoreTraditional"][count]["OREB"]
+        DRB = player["boxScoreTraditional"][count]["DREB"]
+        STL = player["boxScoreTraditional"][count]["STL"]
+        AST = player["boxScoreTraditional"][count]["AST"]
+        BLK = player["boxScoreTraditional"][count]["BLK"]
+        PF = player["boxScoreTraditional"][count]["PF"]
+        TOV = player["boxScoreTraditional"][count]["TO"]
+
+        GmSc =PTS+(0.4*FG)-(0.7*FGA)-(0.4*(FTA-FT))+(0.7*ORB)+(0.3*DRB)+STL+(0.7*AST)+(0.7*BLK)-(0.4*PF)-TOV
+
+        playerStatsTable.update({"_id":  playerId}, { "$set": { "boxScoreTraditional": GmSc}})
+
+        count = count + 1
+        print(playerId)
+        exit()

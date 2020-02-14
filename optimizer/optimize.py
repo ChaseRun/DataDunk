@@ -24,8 +24,11 @@ for team in teams:
     numPlayers = players.count
     
     for player in players:
+
+        #getNewStat(player)
         concatMLData(player)
         #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+        exit()
         
 
 END = time.time()
