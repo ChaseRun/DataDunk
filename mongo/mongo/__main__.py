@@ -21,15 +21,15 @@ def main(start):
 
 		for day in days:
 
-			print("Starting at: " + start)
+			print("Getting Info for: " + day)
 
 			updateBoxScoreTraditional(day)
 			time.sleep(30)
 			updateBoxScoreUsage(day)
 			time.sleep(30)
 			updateBoxScoreAdvanced(day)
-			#combinePlayerStats()
-			#combineTeamStats()
+			combinePlayerStats(day)
+			combineTeamStats(day)
 
 	
 	else:

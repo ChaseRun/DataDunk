@@ -14,7 +14,7 @@ import pdb
 
 def updateBoxScoreTraditional(day):
 
-	boxScoreAdvancedTable = getTable("boxScoreTraditional")
+	boxScoreTraditionalTable = getTable("boxScoreTraditional")
 	newGames = gameIds(day)
 
 	period = [0, 1, 2, 3, 4, 5]
@@ -25,10 +25,10 @@ def updateBoxScoreTraditional(day):
 	print("Getting BoxScore Traditional...")	
 	for game in newGames:
 
-		proxies = get_proxies()
-		proxyPool = cycle(proxies)
+		#proxies = get_proxies()
+		#proxyPool = cycle(proxies)
 
-		firstProxy = list(proxies)[0]
+		#firstProxy = list(proxies)[0]
 		
 		periodArr = []
 		for p in period:
@@ -43,20 +43,20 @@ def updateBoxScoreTraditional(day):
 		}	
 
 		p = 0
-		proxyCount = 0
+		#proxyCount = 0
 		while p < len(period):
 
-			if proxyCount >= len(proxies):
-				proxies = get_proxies()
-				proxyPool = cycle(proxies)
-				print("Generated new proxy list")
-				proxyCount = 0
+		#	if proxyCount >= len(proxies):
+		#		proxies = get_proxies()
+		#		proxyPool = cycle(proxies)
+		#		print("Generated new proxy list")
+		#		proxyCount = 0
 
-			proxy = next(proxyPool)
-			proxyCount = proxyCount + 1
+		#	proxy = next(proxyPool)
+		#	proxyCount = proxyCount + 1
 
 			try:
-				data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, proxy=proxy, timeout=20)
+				data = boxscoretraditionalv2.BoxScoreTraditionalV2(end_period=p, end_range="0", game_id=str(game["_id"]), range_type="0", start_period="1", start_range=p, timeout=20)
 
 			except:
 				print("Proxy failed: " + str(proxy))					
@@ -120,6 +120,6 @@ def updateBoxScoreTraditional(day):
 
 				p = p + 1
 
-		boxScoreTable.insert_one(submit)
+		boxScoreTraditionalTable.insert_one(submit)
 		print (count)
 		count = count + 1

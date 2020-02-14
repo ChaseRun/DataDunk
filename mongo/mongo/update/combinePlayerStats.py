@@ -10,12 +10,12 @@ import datetime
 from update.helperFunctions import *
 
 
-def combinePlayerStats():
+def combinePlayerStats(day):
 
     boxScoreTraditional = getTable("boxScoreTraditional")
     boxScoreAdvanced = getTable("boxScoreAdvanced")
     boxScoreUsage = getTable("boxScoreUsage")
-    newGames = gameIds()
+    newGames = gameIds(day)
     playerStats = getTable("19-20_PlayerStats")
 
     count = 0

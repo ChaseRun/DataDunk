@@ -9,8 +9,8 @@ from sklearn.linear_model import LogisticRegression
 # player statistical performance for one game
 def playerStatsOne(playerId, game, statType):
 
-    teamStatsTable = getTable("19-20_PlayerStats")
-    stats = teamStatsTable.find_one({"_id": playerId})
+    playerStatsTable = getTable("19-20_PlayerStats")
+    stats = playerStatsTable.find_one({"_id": playerId})
 
     # get most recent game
     boxScoreT = stats["boxScoreTraditional"][game]
@@ -18,8 +18,6 @@ def playerStatsOne(playerId, game, statType):
     boxScoreU = stats["boxScoreUsage"][game]
 
     returnStats = []
-
-    # clean data
 
     del boxScoreT["GAME_ID"]
     del boxScoreT["START_POSITION"]
@@ -85,7 +83,7 @@ def playerStatsWindow(playerId, start, end, statType):
 
 # opposing team defense average statistical performance across the entire season
 def teamStatsOne(teamId, game, statType):
-   
+
     teamStatsTable = getTable("19-20_TeamStats")
     stats = teamStatsTable.find_one({"_id": teamId})
 
@@ -201,7 +199,6 @@ def extractMin(min):
 def getTodaysOpponetId(teamId):
     
     gamesTable = getTable("19-20_Season")
-
     day = datetime.strftime(datetime.now(pytz.timezone('US/Eastern')) - timedelta(1), '%m-%d-%Y')
     todayGames = gamesTable.find({"game_date": day})
 
@@ -285,7 +282,7 @@ def trainTestModel(player):
             Y_Train[cat].append(Y_val)
 
         # iterate start and end games
-        #print("done with iteration\tstart: " + str(start) + "\tend: " + str(end))
+        print("done with iteration\tstart: " + str(start) + "\tend: " + str(end))
         
         start = start + 1
         end = end + 1
@@ -302,8 +299,7 @@ def trainTestModel(player):
         statsP2 = playerStatsWindow(playerId, start, end, "playerFive") 
 
         # get opposing team id
-        #teamId = getTodaysOpponetId(playerStats["team_id"])
-        teamId = 1610612749
+        teamId = getTodaysOpponetId(playerStats["team_id"])
 
         # opopsing team performance over season
         statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason")

@@ -20,9 +20,10 @@ setup(
     include_package_data=True,
     install_requires=[
         "click==7.0",
-        "nba_api==1.1.5",
+        "nba_api==1.1.8",
         "pymongo==3.10.0",
         "requests==2.22.0",  
-        "datetime==4.3"
+        "datetime==4.3",
+        "lxml"
     ],
 )

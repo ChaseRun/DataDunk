@@ -6,11 +6,8 @@ from sklearn.linear_model import LogisticRegression
 
 
 # player statistical performance for one game
-def playerStatsOne(playerId, game, statType):
-
-    teamStatsTable = getTable("19-20_PlayerStats")
-    stats = teamStatsTable.find_one({"_id": playerId})
-
+def playerStatsOne(playerId, game, statType, stats):
+    
     # get most recent game
     boxScoreT = stats["boxScoreTraditional"][game]
     boxScoreA = stats["boxScoreAdvanced"][game]
@@ -24,6 +21,9 @@ def playerStatsOne(playerId, game, statType):
     del boxScoreT["START_POSITION"]
     del boxScoreT["COMMENT"]
     del boxScoreT["numGame"]
+
+    print(boxScoreT["MIN"])
+    exit()
 
     del boxScoreA["GAME_ID"]
     del boxScoreA["START_POSITION"]
@@ -64,7 +64,7 @@ def playerStatsOne(playerId, game, statType):
 
 # average player statistical performance across past N games
 # N is 5 for now
-def playerStatsWindow(playerId, start, end, statType):
+def playerStatsWindow(playerId, start, end, statType, playerStats):
 
     stats = []
     returnStat = {}
@@ -72,7 +72,7 @@ def playerStatsWindow(playerId, start, end, statType):
     count = start
 
     while count < end:
-        stats.append(playerStatsOne(playerId, count, statType))
+        stats.append(playerStatsOne(playerId, count, statType, playerStats))
         count = count + 1
 
     df = pd.DataFrame(stats)
@@ -81,10 +81,7 @@ def playerStatsWindow(playerId, start, end, statType):
 
 
 # opposing team defense average statistical performance across the entire season
-def teamStatsOne(teamId, game, statType):
-   
-    teamStatsTable = getTable("19-20_TeamStats")
-    stats = teamStatsTable.find_one({"_id": teamId})
+def teamStatsOne(teamId, game, statType, stats):
 
     boxScoreT = stats["boxScoreTraditional"][game]
     boxScoreA = stats["boxScoreAdvanced"][game]
@@ -124,7 +121,7 @@ def teamStatsOne(teamId, game, statType):
 
 # opposing team defense average statistical performance acorss past N games
 # N is 5 for now
-def teamStatsWindow(teamId, start, end, statType):
+def teamStatsWindow(teamId, start, end, statType, teamStats):
 
     stats = []
     returnStat = {}
@@ -132,7 +129,7 @@ def teamStatsWindow(teamId, start, end, statType):
     count = start
 
     while count < end:
-        stats.append(teamStatsOne(teamId, count, statType))
+        stats.append(teamStatsOne(teamId, count, statType, teamStats))
         count = count + 1
 
     df = pd.DataFrame(stats)
@@ -175,29 +172,16 @@ def getTodaysPlayers():
     
     return players
 
-
-def optimizePlayer(player):
-
-    categories = ["FG3M", "FGM", "FTM", "REB", "AST", "BLK", "STL", "TO"]
-
-    for stat in categories:
-        trainTestModel(player, stat)
-
-
-
 def trainTestModel(player, stat):
 
-
+    print("IN GAME")
 
     playerStatsTable = getTable("19-20_PlayerStats")
     teamStatsTable = getTable("19-20_TeamStats")
     gamesTable = getTable("19-20_Season")
 
     playerStats = playerStatsTable.find_one({"player_name": player["full_name"]})
-
     playerId = playerStats["_id"]
-
-
     lastGame = len(playerStats["boxScoreTraditional"])
 
     # 5 game window
@@ -212,10 +196,10 @@ def trainTestModel(player, stat):
     while end < lastGame - 2:
 
         # player performance last game
-        statsP1 = playerStatsOne(playerId, end, "playerLast")
+        statsP1 = playerStatsOne(playerId, end, "playerLast", playerStats)
 
         # player average performance over last 5 games
-        statsP2 = playerStatsWindow(playerId, start, end, "playerFive") 
+        statsP2 = playerStatsWindow(playerId, start, end, "playerFive", playerStats) 
 
         # get opposing team id
         gameTrain = playerStats["boxScoreTraditional"][end + 1]["GAME_ID"]
@@ -227,11 +211,14 @@ def trainTestModel(player, stat):
         else:
             teamId = otherTeam["away_team_id"]
 
-        # opopsing team performance over season
-        statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason")
+
+        teamStats = teamStatsTable.find_one("_id": teamId)
+
+        # opposing team performance over season
+        statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason", teamStats)
 
         # opposing team performance over last 5 games
-        statsT2 = teamStatsWindow(teamId, start, end, "TeamFive")
+        statsT2 = teamStatsWindow(teamId, start, end, "TeamFive", teamStats)
 
         # combine x vals
         X_Vals = {**statsP1, **statsP2, **statsT1, **statsT2}
@@ -249,7 +236,6 @@ def trainTestModel(player, stat):
 
         print("done with iteration\tstart: " + str(start) + "\tend: " + str(end))
         
-
 
     # get test vals for upcomming game
     print("done getting testing_data")
