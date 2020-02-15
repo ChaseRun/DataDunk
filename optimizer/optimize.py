@@ -26,6 +26,7 @@ for team in teams:
     for player in players:
 
         #getNewStat(player)
+        print("Starting " + player["player_name"])
         concatMLData(player)
         #print(str(playerCount) + "/" + str(numPlayers) + "Players")
         

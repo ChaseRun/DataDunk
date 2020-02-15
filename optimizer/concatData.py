@@ -265,8 +265,9 @@ def concatMLData(player):
 
     print("\t" + player["player_name"] + "\t" + str(int(totalEnd - totalStart)) + " seconds")
     
-
+'''
 def getNewStat(player):
+
 
     playerId = player["_id"]
 
@@ -300,3 +301,6 @@ def getNewStat(player):
         count = count + 1
         print(playerId)
         exit()
+
+
+'''
