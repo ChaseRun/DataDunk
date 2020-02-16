@@ -23,7 +23,7 @@ for team in teams:
 
     #players = playerStatsTable.find({"team_id": team["_id"]})
 
-    players = playerStatsTable.find({"_id": 201935})
+    players = playerStatsTable.find({"team_id": team["_id"]})
 
     playerCount = 1
 
