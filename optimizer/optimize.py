@@ -35,7 +35,7 @@ teams = [1610612757,
 
             
 
-prevPlayers = ["James Harden", "Danuel House Jr.", "P.J. Tucker", "Clint Capela"]
+prevPlayers = ["Rodney Hood", "Zach Collins", "Hassan Whiteside"]
 
 for team in teams:
 
@@ -51,12 +51,14 @@ for team in teams:
 
     for player in players:
 
-        #getNewStat(player)
-        #time.sleep(30)
-        print("Starting " + player["player_name"])
-        concatMLData(player)
-        print(str(playerCount) + "/" + str(numPlayers) + "Players")
-            
+        if player["player_name"] not in prevPlayers:
+
+            #getNewStat(player)
+            #time.sleep(30)
+            print("Starting " + player["player_name"])
+            concatMLData(player)
+            print(str(playerCount) + "/" + str(numPlayers) + "Players")
+                
 
 END = time.time()
 print("\n\nFinished")
