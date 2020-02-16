@@ -16,7 +16,7 @@ START = time.time()
 
 
 
-teams = [1610612757, 
+tylerTeams1 = [1610612757, 
             1610612748, 
             1610612754, 
             1610612759, 
@@ -25,7 +25,14 @@ teams = [1610612757,
             1610612743, 
             1610612755, 
             1610612758, 
-            1610612761, 
+            1610612761
+]
+
+tylerTeams2 = [1610612751, 
+            1610612738, 
+            1610612740, 
+            1610612742, 
+            1610612756, 
             1610612744, 
             1610612739, 
             1610612752, 
@@ -33,11 +40,22 @@ teams = [1610612757,
             1610612764
 ]
 
-            
+chaseTeams = [1610612745,
+            1610612760,
+            1610612746,
+            1610612766,
+            1610612749,
+            1610612750,
+            1610612737,
+            1610612753,
+            1610612747,
+            1610612763
+]
 
-prevPlayers = ["Rodney Hood", "Zach Collins", "Hassan Whiteside"]
 
-for team in teams:
+prevPlayers = ["Terrance Ferguson", "Fanilo Gallinari", "Steven Adams"]
+
+for team in tylerTeams2:
 
     # get team name
     name = teamTable.find_one({"_id": team})
@@ -58,7 +76,7 @@ for team in teams:
             print("Starting " + player["player_name"])
             concatMLData(player)
             #print(str(playerCount) + "/" + str(numPlayers) + "Players")
-            
+
                 
 
 END = time.time()
