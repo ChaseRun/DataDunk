@@ -14,22 +14,32 @@ teamCount = 1
 
 START = time.time()
 
+
+prevPlayers = ["James Harden", "Danuel House Jr.", "P.J. Tucker", "Clint Capela"]
+
 for team in teams:
 
     print("Starting " + team["full_name"] + "\t " + str(teamCount) + " out of 30")
 
-    players = playerStatsTable.find({"team_id": team["_id"]})
+    #players = playerStatsTable.find({"team_id": team["_id"]})
+
+    players = playerStatsTable.find({"_id": 201935})
+
     playerCount = 1
 
     numPlayers = players.count
+
     
     for player in players:
 
-        #getNewStat(player)
-        print("Starting " + player["player_name"])
-        concatMLData(player)
-        #print(str(playerCount) + "/" + str(numPlayers) + "Players")
-        
+        if player["player_name"] not in prevPlayers:
+
+            #getNewStat(player)
+            time.sleep(30)
+            print("Starting " + player["player_name"])
+            concatMLData(player)
+            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+            
 
 END = time.time()
 print("\n\nFinished")
