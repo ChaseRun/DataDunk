@@ -55,7 +55,7 @@ chaseTeams = [1610612745,
 
 prevPlayers = ["Terrance Ferguson", "Fanilo Gallinari", "Steven Adams"]
 
-for team in tylerTeams2:
+for team in tylerTeams1:
 
     # get team name
     name = teamTable.find_one({"_id": team})
@@ -78,7 +78,6 @@ for team in tylerTeams2:
             #print(str(playerCount) + "/" + str(numPlayers) + "Players")
 
                 
-
 END = time.time()
 print("\n\nFinished")
 print("Took " + str(((END - START) / 60 / 60)) + " hours.")
