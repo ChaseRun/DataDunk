@@ -238,6 +238,9 @@ def concatMLData(player):
         else:
             teamId = otherTeam["away_team_id"]
 
+        print(teamId)
+        print(end)
+
         # opopsing team performance over season
         statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason")
 
