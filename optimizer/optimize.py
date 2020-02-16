@@ -47,7 +47,7 @@ for team in teams:
     players = playerStatsTable.find({"team_id": team})
 
     playerCount = 1
-    numPlayers = players.count
+    numPlayers = players.count()
 
     for player in players:
 
