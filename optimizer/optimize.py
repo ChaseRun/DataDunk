@@ -57,7 +57,7 @@ prevPlayers = ["Terrance Ferguson", "Danilo Gallinari", "Steven Adams"]
 
 for team in chaseTeams:
 
-    if team != 1610612751: 
+    if team != 1610612745:
 
         # get team name
         name = teamTable.find_one({"_id": team})
