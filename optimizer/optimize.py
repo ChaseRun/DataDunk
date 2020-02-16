@@ -9,36 +9,53 @@ from concatData import *
 playerStatsTable = getTable("19-20_PlayerStats")
 teamTable = getTable("teams")
 
-teams = teamTable.find({})
+#teams = teamTable.find({})
 teamCount = 1
 
 START = time.time()
 
 
+
+teams = [1610612757, 
+            1610612748, 
+            1610612754, 
+            1610612759, 
+            1610612765, 
+            1610612741, 
+            1610612743, 
+            1610612755, 
+            1610612758, 
+            1610612761, 
+            1610612744, 
+            1610612739, 
+            1610612752, 
+            1610612762, 
+            1610612764
+]
+
+            
+
 prevPlayers = ["James Harden", "Danuel House Jr.", "P.J. Tucker", "Clint Capela"]
 
 for team in teams:
 
-    print("Starting " + team["full_name"] + "\t " + str(teamCount) + " out of 30")
+    # get team name
+    name = teamTable.find_one({"_id": team})
 
-    #players = playerStatsTable.find({"team_id": team["_id"]})
+    print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
 
-    players = playerStatsTable.find({"team_id": team["_id"]})
+    players = playerStatsTable.find({"team_id": team})
 
     playerCount = 1
-
     numPlayers = players.count
 
-    
     for player in players:
 
-        if player["player_name"] not in prevPlayers:
-
-            #getNewStat(player)
-            time.sleep(30)
-            print("Starting " + player["player_name"])
-            concatMLData(player)
-            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+        #getNewStat(player)
+        #time.sleep(30)
+        print("Starting " + player["player_name"])
+        concatMLData(player)
+        print(str(playerCount) + "/" + str(numPlayers) + "Players")
             
 
 END = time.time()
