@@ -68,7 +68,7 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-for team in tylerTeams2:
+for team in tylerTeams1:
 
     # get team name
     name = teamTable.find_one({"_id": team})
