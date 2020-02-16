@@ -15,16 +15,16 @@ teamCount = 1
 START = time.time()
 
 
-cats = {
-    "FG3M": [],
-    "FGM": [],
-    "FTM": [],
-    "REB": [],
-    "AST": [],
-    "BLK": [],
-    "STL": [],
-    "TO": []
-}
+#cats = {
+#    "FG3M": [],
+#    "FGM": [],
+#    "FTM": [],
+#    "REB": [],
+#    "AST": [],
+#    "BLK": [],
+#    "STL": [],
+#    "TO": []
+#}
 
 
 #playerStatsTable.update_many({}, { "$set" : {"ML_Data.X_Vals" : []} })
