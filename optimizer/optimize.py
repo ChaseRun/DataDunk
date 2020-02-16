@@ -53,29 +53,31 @@ chaseTeams = [1610612745,
 ]
 
 
-prevPlayers = ["Terrance Ferguson", "Fanilo Gallinari", "Steven Adams"]
+prevPlayers = ["Terrance Ferguson", "Danilo Gallinari", "Steven Adams"]
 
-for team in tylerTeams1:
+for team in chaseTeams:
 
-    # get team name
-    name = teamTable.find_one({"_id": team})
+    if team != 1610612751: 
 
-    print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
+        # get team name
+        name = teamTable.find_one({"_id": team})
 
-    players = playerStatsTable.find({"team_id": team})
+        print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
 
-    playerCount = 1
-    #numPlayers = players.count
+        players = playerStatsTable.find({"team_id": team})
 
-    for player in players:
+        playerCount = 1
+        #numPlayers = players.count
 
-        if player["player_name"] not in prevPlayers:
+        for player in players:
 
-            #getNewStat(player)
-            #time.sleep(30)
-            print("Starting " + player["player_name"])
-            concatMLData(player)
-            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+            if player["player_name"] not in prevPlayers:
+
+                #getNewStat(player)
+                #time.sleep(30)
+                print("Starting " + player["player_name"])
+                concatMLData(player)
+                #print(str(playerCount) + "/" + str(numPlayers) + "Players")
 
                 
 END = time.time()
