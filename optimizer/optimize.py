@@ -55,7 +55,7 @@ chaseTeams = [1610612745,
 
 prevPlayers = ["Terrance Ferguson", "Danilo Gallinari", "Steven Adams"]
 
-for team in chaseTeams:
+for team in tylerTeams1:
 
     if team != 1610612745:
 
