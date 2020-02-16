@@ -241,7 +241,7 @@ def concatMLData(player):
         # opopsing team performance over season
 
         teamObj = teamStatsTable.find_one({"_id": teamId})
-        teamEnd = len(teamObj["boxScoreTraditional"])
+        teamEnd = len(teamObj["boxScoreTraditional"]) - 1
 
         statsT1 = teamStatsWindow(teamId, 0, teamEnd, "teamSeason")
 
