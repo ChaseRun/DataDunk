@@ -47,7 +47,7 @@ for team in teams:
     players = playerStatsTable.find({"team_id": team})
 
     playerCount = 1
-    numPlayers = players.count()
+    #numPlayers = players.count
 
     for player in players:
 
@@ -57,7 +57,8 @@ for team in teams:
             #time.sleep(30)
             print("Starting " + player["player_name"])
             concatMLData(player)
-            print(str(playerCount) + "/" + str(numPlayers) + "Players")
+            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+            
                 
 
 END = time.time()
