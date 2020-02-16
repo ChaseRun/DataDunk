@@ -15,6 +15,22 @@ teamCount = 1
 START = time.time()
 
 
+cats = {
+    "FG3M": [],
+    "FGM": [],
+    "FTM": [],
+    "REB": [],
+    "AST": [],
+    "BLK": [],
+    "STL": [],
+    "TO": []
+}
+
+
+#playerStatsTable.update_many({}, { "$set" : {"ML_Data.X_Vals" : []} })
+#playerStatsTable.update_many({}, { "$set" : {"ML_Data.Y_Vals" : cats} })
+#exit()
+
 
 tylerTeams1 = [1610612757, 
             1610612748, 
@@ -52,32 +68,25 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-
-prevPlayers = ["Terrance Ferguson", "Danilo Gallinari", "Steven Adams"]
-
 for team in chaseTeams:
 
-    if team != 1610612745:
+    # get team name
+    name = teamTable.find_one({"_id": team})
 
-        # get team name
-        name = teamTable.find_one({"_id": team})
+    print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
 
-        print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
+    players = playerStatsTable.find({"team_id": team})
 
-        players = playerStatsTable.find({"team_id": team})
+    playerCount = 1
+    #numPlayers = players.count
 
-        playerCount = 1
-        #numPlayers = players.count
+    for player in players:
 
-        for player in players:
-
-            if player["player_name"] not in prevPlayers:
-
-                #getNewStat(player)
-                #time.sleep(30)
-                print("Starting " + player["player_name"])
-                concatMLData(player)
-                #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+        #getNewStat(player)
+        #time.sleep(30)
+        print("Starting " + player["player_name"])
+        concatMLData(player)
+        #print(str(playerCount) + "/" + str(numPlayers) + "Players")
 
                 
 END = time.time()

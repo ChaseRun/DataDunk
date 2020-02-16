@@ -242,10 +242,14 @@ def concatMLData(player):
         print(end)
 
         # opopsing team performance over season
-        statsT1 = teamStatsWindow(teamId, 0, end, "teamSeason")
+
+        teamObj = teamStatsOne.find_one({"_id": teamId})
+        teamEnd = len(teamObj["boxScoreTraditional"])
+
+        statsT1 = teamStatsWindow(teamId, 0, teamEnd, "teamSeason")
 
         # opposing team performance over last 5 games
-        statsT2 = teamStatsWindow(teamId, start, end, "TeamFive")
+        statsT2 = teamStatsWindow(teamId, teamEnd - 4, teamEnd, "TeamFive")
 
         # combine x vals
         X_Vals = statsP1 + statsP2 + statsT1 + statsT2
