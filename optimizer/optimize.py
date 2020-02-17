@@ -57,9 +57,10 @@ tylerTeams2 = [1610612751,
             1610612764
 ]
 
-chaseTeams = [1610612745,
-            1610612760,
-            1610612746,
+chaseTeams = [
+            #1610612745,
+            #1610612760,
+            #1610612746,
             1610612766,
             1610612749,
             1610612750,
@@ -69,9 +70,9 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-prevPlayers = ["Danuel House Jr."]
+prevPlayers = ["Miles Bridges", "P.J. Washington", "Cody Zeller"]
 
-for team in tylerTeams1:
+for team in chaseTeams:
 
     # get team name
     name = teamTable.find_one({"_id": team})

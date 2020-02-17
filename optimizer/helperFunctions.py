@@ -144,7 +144,7 @@ def teamStatsWindow(teamId, start, end, statType):
 
 def getTable(table):
 	# returns a mongodb table
-	cluster = MongoClient("mongodb+srv://chase:thatredguy7@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority")
+	cluster = MongoClient("mongodb+srv://chase:1z4tEE0ToyngfLov@cluster0-rrnjh.mongodb.net/test?retryWrites=true&w=majority?ssl=true&ssl_cert_reqs=CERT_NONE")
 	return cluster['nba_data'][table]
 
 def getSalary(salary):
