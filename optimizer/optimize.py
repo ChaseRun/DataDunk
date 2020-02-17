@@ -27,8 +27,8 @@ START = time.time()
 #}
 
 
-#playerStatsTable.update_many({}, { "$set" : {"ML_Data.X_Vals" : []} })
-#playerStatsTable.update_many({}, { "$set" : {"ML_Data.Y_Vals" : cats} })
+#playerStatsTable.update_many({"team_id": 1610612751}, { "$unset" : {"ML_Data.X_Vals" : ""} })
+#playerStatsTable.update_many({"team_id": 1610612751}, { "$unset" : {"ML_Data.Y_Vals" : ""} })
 #exit()
 
 
@@ -68,7 +68,7 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-for team in tylerTeams1:
+for team in tylerTeams2:
 
     # get team name
     name = teamTable.find_one({"_id": team})
