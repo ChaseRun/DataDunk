@@ -264,7 +264,7 @@ def concatMLData(player):
                 else:
                     Y_val = extractMin(Y_val)
 
-            else if Y_val == None:
+            elif Y_val == None:
                 Y_val = 0
 
             place = "ML_Data.Y_Vals." + cat
