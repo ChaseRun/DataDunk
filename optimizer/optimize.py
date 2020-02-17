@@ -23,12 +23,13 @@ START = time.time()
 #    "AST": [],
 #    "BLK": [],
 #    "STL": [],
-#    "TO": []
+#    "TO": [],
+#    "MIN": []
 #}
 
 
-#playerStatsTable.update_many({"team_id": 1610612757}, { "$set" : {"ML_Data.X_Vals" : []} })
-#playerStatsTable.update_many({"team_id": 1610612757}, { "$set" : {"ML_Data.Y_Vals" : cats} })
+#playerStatsTable.update_many({}, { "$set" : {"ML_Data.X_Vals" : []} })
+#playerStatsTable.update_many({}, { "$set" : {"ML_Data.Y_Vals" : cats} })
 #exit()
 
 
@@ -68,7 +69,7 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-prevPlayers = ["James Harden", "Clint Capela", "Danuel House Jr.", "P.J. Tucker"]
+#prevPlayers = ["James Harden", "Clint Capela", "Danuel House Jr.", "P.J. Tucker"]
 
 for team in tylerTeams1:
 

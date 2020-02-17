@@ -212,7 +212,7 @@ def concatMLData(player):
     start = 0
     end = 4
 
-    categories = ["FG3M", "FGM", "FTM", "REB", "AST", "BLK", "STL", "TO"]
+    categories = ["FG3M", "FGM", "FTM", "REB", "AST", "BLK", "STL", "TO", "MIN"]
 
     totalStart = time.time()
 
@@ -260,6 +260,12 @@ def concatMLData(player):
             
             if Y_val == None:
                 Y_val = 0
+
+            if cat == "MIN":
+                if Y_val == none:
+                    Y_val = 0
+                else:
+                    Y_val = extractMin(Y_val)
 
             place = "ML_Data.Y_Vals." + cat
             playerStatsTable.update({"_id":  playerId}, { "$push": { place: Y_val}})
