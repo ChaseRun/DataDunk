@@ -68,7 +68,9 @@ chaseTeams = [1610612745,
             1610612763
 ]
 
-for team in tylerTeams2:
+prevPlayers = ["James Harden", "Clint Capela", "Danuel House Jr.", "P.J. Tucker"]
+
+for team in chaseTeams:
 
     # get team name
     name = teamTable.find_one({"_id": team})
@@ -82,11 +84,13 @@ for team in tylerTeams2:
 
     for player in players:
 
-        #getNewStat(player)
-        #time.sleep(30)
-        print("Starting " + player["player_name"])
-        concatMLData(player)
-        #print(str(playerCount) + "/" + str(numPlayers) + "Players")
+        if player["player_name"] not in prevPlayers:
+
+            #getNewStat(player)
+            #time.sleep(30)
+            print("Starting " + player["player_name"])
+            concatMLData(player)
+            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
 
                 
 END = time.time()
