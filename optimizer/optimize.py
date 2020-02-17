@@ -71,7 +71,7 @@ chaseTeams = [1610612745,
 
 prevPlayers = ["Danuel House Jr."]
 
-for team in chaseTeams:
+for team in tylerTeams1:
 
     # get team name
     name = teamTable.find_one({"_id": team})
