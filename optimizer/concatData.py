@@ -262,7 +262,7 @@ def concatMLData(player):
                 Y_val = 0
 
             if cat == "MIN":
-                if Y_val == none:
+                if Y_val == None:
                     Y_val = 0
                 else:
                     Y_val = extractMin(Y_val)
