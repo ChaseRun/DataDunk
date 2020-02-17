@@ -257,15 +257,15 @@ def concatMLData(player):
         # add Y vals to player
         for cat in categories:
             Y_val = playerStats["boxScoreTraditional"][end + 1][cat]
-            
-            if Y_val == None:
-                Y_val = 0
 
             if cat == "MIN":
                 if Y_val == None:
                     Y_val = 0
                 else:
                     Y_val = extractMin(Y_val)
+
+            else if Y_val == None:
+                Y_val = 0
 
             place = "ML_Data.Y_Vals." + cat
             playerStatsTable.update({"_id":  playerId}, { "$push": { place: Y_val}})
