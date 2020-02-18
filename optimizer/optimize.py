@@ -28,34 +28,43 @@ cats = {
 }
 
 
-playerStatsTable.update_many({"team_id": 1610612757}, { "$set" : {"ML_Data.X_Vals" : []} })
-playerStatsTable.update_many({"team_id": 1610612757}, { "$set" : {"ML_Data.Y_Vals" : cats} })
+playerStatsTable.update_many({"team_id": 1610612738}, { "$set" : {"ML_Data.X_Vals" : []}})
+playerStatsTable.update_many({"team_id": 1610612738}, { "$set" : {"ML_Data.Y_Vals" : cats}})
 exit()
 '''
 
-tylerTeams1 = [1610612757, 
-            1610612748, 
-            1610612754, 
-            1610612759, 
-            1610612765, 
-            1610612741, 
-            1610612743, 
-            1610612755, 
-            1610612758, 
-            1610612761
+chase1 = [
+            1610612738,   # celtics
+            1610612740,   # pelicans
+            1610612742,   # mavs
+            1610612756    # suns
 ]
 
-tylerTeams2 = [1610612751, 
-            1610612738, 
-            1610612740, 
-            1610612742, 
-            1610612756, 
-            1610612744, 
-            1610612739, 
-            1610612752, 
-            1610612762, 
-            1610612764
+chase2 = [
+            1610612744,   # wariors
+            1610612739,   # cavs
+            1610612752,   # knicks
+            1610612762,   # jazz
+            1610612764    # wizards
 ]
+
+
+chase3 = [
+            1610612748,   # miami
+            1610612754,   # pacers
+            1610612759,   # spurs
+            1610612765    # pistons
+]
+
+
+chase4 = [
+            1610612741,   # bulls
+            1610612743,   # nuggets
+            1610612755,   # 76
+            1610612758,   # kings
+            1610612761   # raptors
+]
+
 
 chaseTeams = [
             #1610612745,
@@ -70,29 +79,17 @@ chaseTeams = [
             1610612763
 ]
 
-prevPlayers = ["Miles Bridges", "P.J. Washington", "Cody Zeller"]
-
-for team in chaseTeams:
+for team in chase1:
 
     # get team name
-    name = teamTable.find_one({"_id": team})
-
-    print("Starting " + name["full_name"] + "\t " + str(teamCount) + " out of 15")
-
+    print("Starting " + teamTable.find_one({"_id": team} + "\t " + str(teamCount) + " out of 15")
     players = playerStatsTable.find({"team_id": team})
-
-    playerCount = 1
-    #numPlayers = players.count
 
     for player in players:
 
-        if player["player_name"] not in prevPlayers:
+        print("Starting " + player["player_name"])
+        concatMLData(player)
 
-            #getNewStat(player)
-            #time.sleep(30)
-            print("Starting " + player["player_name"])
-            concatMLData(player)
-            #print(str(playerCount) + "/" + str(numPlayers) + "Players")
 
                 
 END = time.time()
