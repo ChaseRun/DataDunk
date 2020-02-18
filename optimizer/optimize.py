@@ -28,21 +28,17 @@ cats = {
 }
 
 
-playerStatsTable.update_many({"team_id": 1610612738}, { "$set" : {"ML_Data.X_Vals" : []}})
-playerStatsTable.update_many({"team_id": 1610612738}, { "$set" : {"ML_Data.Y_Vals" : cats}})
+playerStatsTable.update_many({"team_id": 1610612742}, { "$set" : {"ML_Data.X_Vals" : []}})
+playerStatsTable.update_many({"team_id": 1610612742}, { "$set" : {"ML_Data.Y_Vals" : cats}})
 exit()
 '''
 
 chase1 = [
-            1610612738,   # celtics
-            1610612740,   # pelicans
             1610612742,   # mavs
             1610612756    # suns
 ]
 
 chase2 = [
-            1610612744,   # wariors
-            1610612739,   # cavs
             1610612752,   # knicks
             1610612762,   # jazz
             1610612764    # wizards
@@ -50,16 +46,12 @@ chase2 = [
 
 
 chase3 = [
-            1610612748,   # miami
-            1610612754,   # pacers
             1610612759,   # spurs
             1610612765    # pistons
 ]
 
 
 chase4 = [
-            1610612741,   # bulls
-            1610612743,   # nuggets
             1610612755,   # 76
             1610612758,   # kings
             1610612761   # raptors
@@ -79,7 +71,7 @@ chaseTeams = [
             1610612763
 ]
 
-for team in chase4:
+for team in chase1:
 
     # get team name
     name = teamTable.find_one({"_id": team})
