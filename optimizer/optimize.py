@@ -79,7 +79,7 @@ chaseTeams = [
             1610612763
 ]
 
-for team in chase3:
+for team in chase4:
 
     # get team name
     name = teamTable.find_one({"_id": team})
