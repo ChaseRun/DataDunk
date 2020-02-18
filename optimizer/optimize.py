@@ -82,7 +82,10 @@ chaseTeams = [
 for team in chase1:
 
     # get team name
-    print("Starting " + teamTable.find_one({"_id": team} + "\t " + str(teamCount) + " out of 15")
+    name = teamTable.find_one({"_id": team})
+    print("Starting " +  name["full_name"] + "\t " + str(teamCount) + " out of 15")
+    
+    
     players = playerStatsTable.find({"team_id": team})
 
     for player in players:
