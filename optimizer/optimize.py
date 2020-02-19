@@ -50,7 +50,7 @@ exit()
 
 '''
 
-restrict1 = ["Kelly Oubre Jr.", "Dario Saric", "Deandre Ayton", "Devin Booker", "Ricky Rubio", "Frank Kaminsky", "Aaron Baynes", "Mikal Bridges", "Jevon Carter"]
+restrict1 = ["Kelly Oubre Jr.", "Dario Saric", "Deandre Ayton", "Devin Booker", "Ricky Rubio", "Frank Kaminsky", "Aron Baynes", "Mikal Bridges", "Jevon Carter"]
 
 chase1 = [
             1610612756    # suns
@@ -100,7 +100,7 @@ for team in chase1:
 
     for player in players:
 
-        if player["player_name"] not in restrict1
+        if player["player_name"] not in restrict1:
 
             print("Starting " + player["player_name"])
             concatMLData(player)
