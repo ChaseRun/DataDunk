@@ -52,7 +52,7 @@ exit()
 
 restrict1 = ["Kelly Oubre Jr.", "Dario Saric", "Deandre Ayton", "Devin Booker", "Ricky Rubio", "Frank Kaminsky", "Aron Baynes", "Mikal Bridges", "Jevon Carter"]
 restrict2 = ["Bojan Bogdanovic", "Royce O'Neale", "Rudy Gobert", "Donovan Mitchell", "Mike Conley", "Joe Ingles", "Emmanuel Mudiay", "Jeff Green", "Ed Davis", "Georges Niang"]
-
+restrict3 = ["Tony Snell", "Markieff Morris", "Andre Durmmond", "Bruce Brown", "Reggie Jackson", "Luke Kennard", "Derrick Rose", "Thon Maker", "Langston Galloway", "Christian Wood"]
 
 chase1 = [
             1610612756    # suns
@@ -65,7 +65,6 @@ chase2 = [
 
 
 chase3 = [
-            1610612759,   # spurs
             1610612765    # pistons
 ]
 
@@ -90,7 +89,7 @@ chaseTeams = [
             1610612763
 ]
 
-for team in chase2:
+for team in chase3:
 
     # get team name
     name = teamTable.find_one({"_id": team})
@@ -101,7 +100,7 @@ for team in chase2:
 
     for player in players:
 
-        if player["player_name"] not in restrict2:
+        if player["player_name"] not in restrict3:
 
             print("Starting " + player["player_name"])
             concatMLData(player)
