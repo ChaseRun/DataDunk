@@ -53,7 +53,7 @@ exit()
 restrict1 = ["Kelly Oubre Jr.", "Dario Saric", "Deandre Ayton", "Devin Booker", "Ricky Rubio", "Frank Kaminsky", "Aron Baynes", "Mikal Bridges", "Jevon Carter"]
 restrict2 = ["Bojan Bogdanovic", "Royce O'Neale", "Rudy Gobert", "Donovan Mitchell", "Mike Conley", "Joe Ingles", "Emmanuel Mudiay", "Jeff Green", "Ed Davis", "Georges Niang"]
 restrict3 = ["Tony Snell", "Markieff Morris", "Andre Drummond", "Bruce Brown", "Reggie Jackson", "Luke Kennard", "Derrick Rose", "Thon Maker", "Langston Galloway", "Christian Wood"]
-restrict4 = ["Harrison Barnes", "Marvin Bagley III", "Dewayne Dedmon", "Buddy Hield", "De'Aaron Fox", "Bogdan Bogdanovic", "Richaun Holmes", "Corey Joseph", "Trevor Ariza", "Nemanja Bjelica"]
+restrict4 = ["Harrison Barnes", "Marvin Bagley III", "Dewayne Dedmon", "Buddy Hield", "De'Aaron Fox", "Bogdan Bogdanovic", "Richaun Holmes", "Cory Joseph", "Trevor Ariza", "Nemanja Bjelica"]
 
 chase1 = [
             1610612756    # suns
