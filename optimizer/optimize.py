@@ -14,7 +14,7 @@ teamCount = 1
 
 START = time.time()
 
-'''
+
 cats = {
     "FG3M": [],
     "FGM": [],
@@ -27,14 +27,32 @@ cats = {
     "MIN": []
 }
 
+'''
+playerStatsTable.update_many({"team_id": 1610612742}, { "$unset" : {"ML_Data" : ""}})
+#playerStatsTable.update_many({"team_id": 1610612742}, { "$unset" : {"ML_Data.Y_Vals" : ""}})
+playerStatsTable.update_many({"team_id": 1610612752}, { "$unset" : {"ML_Data" : ""}})
+#playerStatsTable.update_many({"team_id": 1610612752}, { "$unset" : {"ML_Data.Y_Vals" : ""}})
+playerStatsTable.update_many({"team_id": 1610612759}, { "$unset" : {"ML_Data" : ""}})
+#playerStatsTable.update_many({"team_id": 1610612759}, { "$unset" : {"ML_Data.Y_Vals" : ""}})
+playerStatsTable.update_many({"team_id": 1610612755}, { "$unset" : {"ML_Data" : ""}})
+#playerStatsTable.update_many({"team_id": 1610612755}, { "$unset" : {"ML_Data.Y_Vals" : ""}})
+
 
 playerStatsTable.update_many({"team_id": 1610612742}, { "$set" : {"ML_Data.X_Vals" : []}})
 playerStatsTable.update_many({"team_id": 1610612742}, { "$set" : {"ML_Data.Y_Vals" : cats}})
+playerStatsTable.update_many({"team_id": 1610612752}, { "$set" : {"ML_Data.X_Vals" : []}})
+playerStatsTable.update_many({"team_id": 1610612752}, { "$set" : {"ML_Data.Y_Vals" : cats}})
+playerStatsTable.update_many({"team_id": 1610612759}, { "$set" : {"ML_Data.X_Vals" : []}})
+playerStatsTable.update_many({"team_id": 1610612759}, { "$set" : {"ML_Data.Y_Vals" : cats}})
+playerStatsTable.update_many({"team_id": 1610612755}, { "$set" : {"ML_Data.X_Vals" : []}})
+playerStatsTable.update_many({"team_id": 1610612755}, { "$set" : {"ML_Data.Y_Vals" : cats}})
 exit()
+
 '''
 
+restrict1 = ["Kelly Oubre Jr.", "Dario Saric", "Deandre Ayton", "Devin Booker", "Ricky Rubio", "Frank Kaminsky", "Aaron Baynes", "Mikal Bridges", "Jevon Carter"]
+
 chase1 = [
-            1610612742,   # mavs
             1610612756    # suns
 ]
 
@@ -71,7 +89,7 @@ chaseTeams = [
             1610612763
 ]
 
-for team in chase4:
+for team in chase1:
 
     # get team name
     name = teamTable.find_one({"_id": team})
@@ -82,8 +100,10 @@ for team in chase4:
 
     for player in players:
 
-        print("Starting " + player["player_name"])
-        concatMLData(player)
+        if player["player_name"] not in restrict1
+
+            print("Starting " + player["player_name"])
+            concatMLData(player)
 
 
                 
